@@ -1,0 +1,1 @@
+# consoledot-go-starter-app
