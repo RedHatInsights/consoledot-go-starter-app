@@ -100,6 +100,8 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "This is a sample API for the ConsoleDot Go Starter App.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
+	LeftDelim:        "{{",
+	RightDelim:       "}}",
 }
 
 func init() {
