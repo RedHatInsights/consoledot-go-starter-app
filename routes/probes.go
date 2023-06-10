@@ -21,10 +21,7 @@ func addProbesRoutes(probesGroup *gin.RouterGroup) {
 // @Description  Determines readiness of the application
 // @Tags         probes
 // @Produce      json
-// @Success      200  {object}  readyResponse
-// @Failure      400  {object}  httputil.HTTPError
-// @Failure      404  {object}  httputil.HTTPError
-// @Failure      500  {object}  httputil.HTTPError
+// @Success      200  {object}  map[string]any
 // @Router       /probes/ready [get]
 func readinessProbe(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{
@@ -37,10 +34,7 @@ func readinessProbe(context *gin.Context) {
 // @Description  Determines if application is still alive
 // @Tags         probes
 // @Produce      json
-// @Success      200  {object}  aliveResponse
-// @Failure      400  {object}  httputil.HTTPError
-// @Failure      404  {object}  httputil.HTTPError
-// @Failure      500  {object}  httputil.HTTPError
+// @Success      200  {object}  map[string]any
 // @Router       /probes/alive [get]
 func livelinessProbe(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{

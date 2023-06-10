@@ -20,10 +20,7 @@ func addAPIRoutes(apiGroup *gin.RouterGroup) {
 // @Description  Recieve a greeting from the API
 // @Tags         api
 // @Produce      json
-// @Success      200  {object}  greetingResponse
-// @Failure      400  {object}  httputil.HTTPError
-// @Failure      404  {object}  httputil.HTTPError
-// @Failure      500  {object}  httputil.HTTPError
+// @Success      200  {object}  map[string]any
 // @Router       /api/v1/hello [get]
 func helloWorld(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{

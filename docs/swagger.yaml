@@ -1,0 +1,57 @@
+basePath: /api/v1
+host: localhost:8080
+info:
+  contact:
+    email: addrew@redhat.com
+    name: Adam Drew
+    url: https://github.com/RedHatInsights/consoledot-go-starter-app
+  description: This is a sample API for the ConsoleDot Go Starter App.
+  license:
+    name: MIT License
+    url: https://opensource.org/license/mit/
+  title: ConsoleDot Go Starter App API
+  version: "1.0"
+paths:
+  /api/v1/hello:
+    get:
+      description: Recieve a greeting from the API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Recieve a greeting
+      tags:
+      - api
+  /probes/alive:
+    get:
+      description: Determines if application is still alive
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Determines if application is still alive
+      tags:
+      - probes
+  /probes/ready:
+    get:
+      description: Determines readiness of the application
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Determines readiness of the application
+      tags:
+      - probes
+swagger: "2.0"
