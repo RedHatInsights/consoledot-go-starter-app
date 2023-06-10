@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 
 	clowder "github.com/redhatinsights/app-common-go/pkg/api/v1"
 
@@ -14,12 +15,21 @@ const (
 	envFile          = "local.env"
 	hostEnvVar       = "HOST"
 	publicPortEnvVar = "PUBLIC_PORT"
+	postgres         = "postgres://"
+
+	db_user     = "DB_USER"
+	db_password = "DB_PASSWORD"
+	db_hostname = "DB_HOSTNAME"
+	db_port     = "DB_PORT"
+	db_name     = "DB_NAME"
 )
 
 func Load() *Config {
 	c := Config{
-		EnvVars:   make(map[string]string),
-		AppConfig: &clowder.AppConfig{},
+		EnvVars: make(map[string]string),
+		AppConfig: &clowder.AppConfig{
+			Database: &clowder.DatabaseConfig{},
+		},
 	}
 	c.Load()
 	return &c
@@ -37,6 +47,18 @@ func (c *Config) RouterBindAddress() string {
 	host += fmt.Sprint(*c.AppConfig.PublicPort)
 
 	return host
+}
+
+// Get Database Connection String
+func (c *Config) DatabaseConnectionString() string {
+	dbConnectionStringParts := []string{
+		postgres,
+		c.AppConfig.Database.Username, ":",
+		c.AppConfig.Database.Password, "@",
+		c.AppConfig.Database.Hostname, ":",
+		fmt.Sprint(c.AppConfig.Database.Port), "/",
+		c.AppConfig.Database.Name}
+	return strings.Join(dbConnectionStringParts, "")
 }
 
 func (c *Config) Load() {
@@ -60,6 +82,11 @@ func (c *Config) loadEnvVars() {
 func (c *Config) setAppConfigFromEnvVars() {
 	//Set the AppConfig public port from the publicPort const
 	c.AppConfig.PublicPort = c.getEnvVarIntPtr(publicPortEnvVar)
+	c.AppConfig.Database.Username = os.Getenv(db_user)
+	c.AppConfig.Database.Password = os.Getenv(db_password)
+	c.AppConfig.Database.Hostname = os.Getenv(db_hostname)
+	c.AppConfig.Database.Port = *c.getEnvVarIntPtr(db_port)
+	c.AppConfig.Database.Name = os.Getenv(db_name)
 }
 
 func (c *Config) getEnvVarIntPtr(envVar string) *int {
