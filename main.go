@@ -20,7 +20,6 @@ var conf = config.Load()
 // @contact.email  	addrew@redhat.com
 // @license.name  	MIT License
 // @license.url   	https://opensource.org/license/mit/
-// @host      		localhost:8080
 // @BasePath  		/api/v1
 func main() {
 	router := routes.SetupRouter()
