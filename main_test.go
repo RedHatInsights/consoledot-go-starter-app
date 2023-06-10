@@ -35,7 +35,7 @@ func TestHelloRoute(t *testing.T) {
 	router := routes.SetupRouter()
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/api/hello", nil)
+	req, _ := http.NewRequest("GET", "/api/v1/hello", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
