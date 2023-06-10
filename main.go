@@ -9,7 +9,10 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+var conf = config.Load()
+
 // main godoc
+// @title ConsoleDot Go Starter App API
 // @version         1.0
 // @description     This is a sample API for the ConsoleDot Go Starter App.
 // @contact.name   	Adam Drew
@@ -20,7 +23,6 @@ import (
 // @host      		localhost:8080
 // @BasePath  		/api/v1
 func main() {
-	conf := config.Load()
 	router := routes.SetupRouter()
 	initAPIDocs(router)
 	router.Run(conf.RouterBindAddress())
@@ -28,7 +30,7 @@ func main() {
 
 func initAPIDocs(router *gin.Engine) {
 	// Example of editing the OpenAPI info programatically
-	docs.SwaggerInfo.Title = "ConsoleDot Go Starter App API"
+	docs.SwaggerInfo.Host = conf.RouterBindAddress()
 	// Serve out the API Docs
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
