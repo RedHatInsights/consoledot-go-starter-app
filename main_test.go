@@ -5,11 +5,12 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/RedHatInsights/consoledot-go-starter-app/routes"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestReadinessProbe(t *testing.T) {
-	router := setupRouter()
+	router := routes.SetupRouter()
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/probes/ready", nil)
@@ -20,7 +21,7 @@ func TestReadinessProbe(t *testing.T) {
 }
 
 func TestLivlinessProbeRoute(t *testing.T) {
-	router := setupRouter()
+	router := routes.SetupRouter()
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/probes/alive", nil)
@@ -31,7 +32,7 @@ func TestLivlinessProbeRoute(t *testing.T) {
 }
 
 func TestHelloRoute(t *testing.T) {
-	router := setupRouter()
+	router := routes.SetupRouter()
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/hello", nil)
