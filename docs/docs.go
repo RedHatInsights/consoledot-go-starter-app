@@ -96,7 +96,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "ConsoleDot Go Starter App API",
+	Title:            "",
 	Description:      "This is a sample API for the ConsoleDot Go Starter App.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
