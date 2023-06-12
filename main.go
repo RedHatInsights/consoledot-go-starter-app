@@ -14,8 +14,8 @@ import (
 )
 
 var (
-	conf = config.Load()
-	// db      = dbConnect()
+	conf    = config.Load()
+	db      = dbConnect()
 	apiPath = makeAPIPath()
 )
 

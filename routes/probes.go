@@ -17,7 +17,7 @@ func setupProbes(router *gin.Engine, apiPath string) {
 // @Tags         probes
 // @Produce      json
 // @Success      200  {object}  map[string]any
-// @Router       /healthz [get]
+// @Router       /readyz [get]
 func readinessProbe(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{
 		"ready": "OK",
@@ -30,7 +30,7 @@ func readinessProbe(context *gin.Context) {
 // @Tags         probes
 // @Produce      json
 // @Success      200  {object}  map[string]any
-// @Router       /livez [get]
+// @Router       /healthz [get]
 func livelinessProbe(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{
 		"alive": "OK",
