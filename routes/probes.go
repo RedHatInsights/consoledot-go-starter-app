@@ -6,14 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func setupProbesGroup(router *gin.Engine, apiPath string) {
-	probesGroup := router.Group(apiPath + "/probes")
-	addProbesRoutes(probesGroup)
-}
-
-func addProbesRoutes(probesGroup *gin.RouterGroup) {
-	probesGroup.GET("/ready", readinessProbe)
-	probesGroup.GET("/alive", livelinessProbe)
+func setupProbes(router *gin.Engine, apiPath string) {
+	router.GET("/healthz", readinessProbe)
+	router.GET("/livez", livelinessProbe)
 }
 
 // readinessProbe godoc
@@ -22,7 +17,7 @@ func addProbesRoutes(probesGroup *gin.RouterGroup) {
 // @Tags         probes
 // @Produce      json
 // @Success      200  {object}  map[string]any
-// @Router       /probes/ready [get]
+// @Router       /healthz [get]
 func readinessProbe(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{
 		"ready": "OK",
@@ -35,7 +30,7 @@ func readinessProbe(context *gin.Context) {
 // @Tags         probes
 // @Produce      json
 // @Success      200  {object}  map[string]any
-// @Router       /probes/alive [get]
+// @Router       /livez [get]
 func livelinessProbe(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{
 		"alive": "OK",

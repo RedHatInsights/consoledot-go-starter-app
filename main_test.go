@@ -13,7 +13,7 @@ func TestReadinessProbe(t *testing.T) {
 	router := routes.SetupRouter(apiPath)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", apiPath+"/probes/ready", nil)
+	req, _ := http.NewRequest("GET", "/healthz", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
@@ -24,7 +24,7 @@ func TestLivlinessProbeRoute(t *testing.T) {
 	router := routes.SetupRouter(apiPath)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", apiPath+"/probes/alive", nil)
+	req, _ := http.NewRequest("GET", "/livez", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
