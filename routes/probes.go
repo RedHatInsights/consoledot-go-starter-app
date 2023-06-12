@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func setupProbesGroup(router *gin.Engine) {
-	probesGroup := router.Group("/probes")
+func setupProbesGroup(router *gin.Engine, apiPath string) {
+	probesGroup := router.Group(apiPath + "/probes")
 	addProbesRoutes(probesGroup)
 }
 

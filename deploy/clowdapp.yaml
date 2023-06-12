@@ -17,6 +17,7 @@ objects:
       webServices:
         public: 
           enabled: true
+          apiPath: starter-app
     database:
       name: ${DB_NAME}
       version: 12

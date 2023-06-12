@@ -10,10 +10,10 @@ import (
 )
 
 func TestReadinessProbe(t *testing.T) {
-	router := routes.SetupRouter()
+	router := routes.SetupRouter(apiPath)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/probes/ready", nil)
+	req, _ := http.NewRequest("GET", apiPath+"/probes/ready", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
@@ -21,10 +21,10 @@ func TestReadinessProbe(t *testing.T) {
 }
 
 func TestLivlinessProbeRoute(t *testing.T) {
-	router := routes.SetupRouter()
+	router := routes.SetupRouter(apiPath)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/probes/alive", nil)
+	req, _ := http.NewRequest("GET", apiPath+"/probes/alive", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
@@ -32,10 +32,10 @@ func TestLivlinessProbeRoute(t *testing.T) {
 }
 
 func TestHelloRoute(t *testing.T) {
-	router := routes.SetupRouter()
+	router := routes.SetupRouter(apiPath)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/api/v1/hello", nil)
+	req, _ := http.NewRequest("GET", apiPath+"/v1/hello", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)

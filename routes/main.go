@@ -4,9 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter() *gin.Engine {
+func SetupRouter(apiPath string) *gin.Engine {
 	router := gin.Default()
-	setupProbesGroup(router)
-	setupAPIRoutes(router)
+	setupProbesGroup(router, apiPath)
+	setupAPIRoutes(router, apiPath)
 	return router
 }
