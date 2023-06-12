@@ -1,5 +1,5 @@
 BINARY_NAME=server
-IMAGE=quay.io/psav/clowder-hello
+IMAGE=quay.io/rh_ee_addrew/consoledot-go-starter-app
 IMAGE_TAG=latest
 
 build:

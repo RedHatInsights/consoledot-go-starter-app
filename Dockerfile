@@ -19,5 +19,6 @@ RUN ./swag init
 
 FROM builder as final
 
+WORKDIR /app
 EXPOSE 8080
 CMD ["server"]
