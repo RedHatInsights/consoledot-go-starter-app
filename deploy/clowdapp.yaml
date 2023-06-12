@@ -21,7 +21,7 @@ objects:
           whitelistPaths:
           - /healthz
           - /readyz
-          - /api/*
+          - /api/starter-app/*
     database:
       name: ${DB_NAME}
       version: 12
