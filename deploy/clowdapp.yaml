@@ -18,6 +18,11 @@ objects:
         public: 
           enabled: true
           apiPath: starter-app
+          whitelistPaths:
+          - /healthz
+          - /readyz
+          - /swagger
+          - /api/starter-app/v1/hello
     database:
       name: ${DB_NAME}
       version: 12
