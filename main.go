@@ -50,7 +50,7 @@ func dbConnect() *pgx.Conn {
 func initAPIDocs(router *gin.Engine) {
 	// Example of editing the OpenAPI info programatically
 	docs.SwaggerInfo.Host = conf.RouterBindAddress()
-	docs.SwaggerInfo.BasePath = apiPath + "/v1"
+	docs.SwaggerInfo.BasePath = apiPath + "/swagger"
 	// Serve out the API Docs
 	router.GET(apiPath, ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
