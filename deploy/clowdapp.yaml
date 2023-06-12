@@ -1,0 +1,41 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: consoledot-starter-app
+objects:
+- apiVersion: cloud.redhat.com/v1alpha1
+  kind: ClowdApp
+  metadata:
+    name: ${CLOWDAPP_NAME}
+    namespace: ${NAMESPACE}
+  spec:
+    envName: ${ENV_NAME}
+    deployments:
+    - name: app
+      podSpec:
+        image: ${IMAGE}:${IMAGE_TAG}
+      webServices:
+        public: 
+          enabled: true
+    database:
+      name: ${DB_NAME}
+      version: 12
+parameters:
+- description: Name of the ClowdApp
+  name: CLOWDAPP_NAME
+  value: go-starter-app
+- description : ClowdEnvironment name
+  name: ENV_NAME
+  value: stage
+- description : Database Name
+  name: DB_NAME
+  value: starter_app
+- description: Namespace to deploy into
+  name: NAMESPACE
+  value: ${NAMESPACE}
+- description: App Image
+  name: IMAGE
+  value: ${IMAGE}
+- description: Image Tag
+  name: IMAGE_TAG
+  value: ${IMAGE_TAG}
