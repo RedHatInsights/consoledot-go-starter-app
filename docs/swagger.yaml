@@ -1,5 +1,4 @@
 basePath: /api/v1
-host: localhost:8080
 info:
   contact:
     email: addrew@redhat.com
@@ -12,7 +11,7 @@ info:
   title: ConsoleDot Go Starter App API
   version: "1.0"
 paths:
-  /api/v1/hello:
+  /api/starter-app/v1/hello:
     get:
       description: Recieve a greeting from the API
       produces:
@@ -26,21 +25,7 @@ paths:
       summary: Recieve a greeting
       tags:
       - api
-  /probes/alive:
-    get:
-      description: Determines if application is still alive
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Determines if application is still alive
-      tags:
-      - probes
-  /probes/ready:
+  /healthz:
     get:
       description: Determines readiness of the application
       produces:
@@ -52,6 +37,20 @@ paths:
             additionalProperties: true
             type: object
       summary: Determines readiness of the application
+      tags:
+      - probes
+  /livez:
+    get:
+      description: Determines if application is still alive
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Determines if application is still alive
       tags:
       - probes
 swagger: "2.0"

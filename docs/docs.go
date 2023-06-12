@@ -24,7 +24,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/hello": {
+        "/api/starter-app/v1/hello": {
             "get": {
                 "description": "Recieve a greeting from the API",
                 "produces": [
@@ -45,28 +45,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/probes/alive": {
-            "get": {
-                "description": "Determines if application is still alive",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "probes"
-                ],
-                "summary": "Determines if application is still alive",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
-        "/probes/ready": {
+        "/healthz": {
             "get": {
                 "description": "Determines readiness of the application",
                 "produces": [
@@ -86,6 +65,27 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/livez": {
+            "get": {
+                "description": "Determines if application is still alive",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "probes"
+                ],
+                "summary": "Determines if application is still alive",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
         }
     }
 }`
@@ -93,7 +93,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
 	Title:            "ConsoleDot Go Starter App API",

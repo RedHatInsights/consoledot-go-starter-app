@@ -14,10 +14,9 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
     "basePath": "/api/v1",
     "paths": {
-        "/api/v1/hello": {
+        "/api/starter-app/v1/hello": {
             "get": {
                 "description": "Recieve a greeting from the API",
                 "produces": [
@@ -38,16 +37,16 @@
                 }
             }
         },
-        "/probes/alive": {
+        "/healthz": {
             "get": {
-                "description": "Determines if application is still alive",
+                "description": "Determines readiness of the application",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "probes"
                 ],
-                "summary": "Determines if application is still alive",
+                "summary": "Determines readiness of the application",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -59,16 +58,16 @@
                 }
             }
         },
-        "/probes/ready": {
+        "/livez": {
             "get": {
-                "description": "Determines readiness of the application",
+                "description": "Determines if application is still alive",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "probes"
                 ],
-                "summary": "Determines readiness of the application",
+                "summary": "Determines if application is still alive",
                 "responses": {
                     "200": {
                         "description": "OK",

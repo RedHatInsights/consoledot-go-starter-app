@@ -14,8 +14,8 @@ import (
 )
 
 var (
-	conf    = config.Load()
-	db      = dbConnect()
+	conf = config.Load()
+	// db      = dbConnect()
 	apiPath = makeAPIPath()
 )
 
@@ -48,10 +48,11 @@ func dbConnect() *pgx.Conn {
 }
 
 func initAPIDocs(router *gin.Engine) {
-	swaggerRoute := apiPath + "/swagger"
+	swaggerRoute := apiPath + "/swagger/*any"
 	// Example of editing the OpenAPI info programatically
 	docs.SwaggerInfo.Host = conf.RouterBindAddress()
 	docs.SwaggerInfo.BasePath = swaggerRoute
 	// Serve out the API Docs
+
 	router.GET(swaggerRoute, ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
