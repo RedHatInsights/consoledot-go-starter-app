@@ -15,7 +15,7 @@ import (
 
 var (
 	conf    = config.Load()
-	db      = dbConnect()
+	db      *pgx.Conn
 	apiPath = makeAPIPath()
 )
 
@@ -30,6 +30,7 @@ var (
 // @license.url   	https://opensource.org/license/mit/
 // @BasePath  		/api/v1
 func main() {
+	db = dbConnect()
 	router := routes.SetupRouter(apiPath)
 	initAPIDocs(router)
 	router.Run(conf.RouterBindAddress())
