@@ -28,3 +28,6 @@ run-minikube:
 
 run-ephemeral:
 	oc process -f deploy/clowdapp.yaml -p NAMESPACE=$(NAMESPACE) -p ENV_NAME=env-$(NAMESPACE)  IMAGE=${IMAGE} IMAGE_TAG=${IMAGE_TAG} | oc create -f -
+
+fork:
+	python scripts/fork.py

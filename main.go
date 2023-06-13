@@ -28,7 +28,7 @@ var (
 // @contact.email  	addrew@redhat.com
 // @license.name  	MIT License
 // @license.url   	https://opensource.org/license/mit/
-// @BasePath  		/api/v1
+// @BasePath  		/api/starter-app/v1
 func main() {
 	db = dbConnect()
 	router := routes.SetupRouter(apiPath)

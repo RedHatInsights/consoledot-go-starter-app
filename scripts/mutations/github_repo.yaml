@@ -1,0 +1,12 @@
+---
+old_value: "github.com/RedHatInsights/consoledot-go-starter-app"
+files:
+  - "go.mod"
+  - "providers/database/main.go"
+  - "routes/api.go"
+  - "routes/main.go"
+  - "routes/probes.go"
+  - "main.go"
+  - "main_test.go" 
+prompt: "Your github repo. This will be used as your go package name. Example: github.com/yourname/yourrepo"
+mutation_name: "github repo"
