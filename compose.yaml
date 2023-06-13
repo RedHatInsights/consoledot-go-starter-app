@@ -1,0 +1,10 @@
+version: '3'
+services:
+  database:
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: shadowman
+      POSTGRES_PASSWORD: yearofthelinuxdesktop
+      POSTGRES_DB: starter_app
