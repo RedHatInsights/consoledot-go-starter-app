@@ -28,3 +28,6 @@ run-fork-script:
 	python scripts/fork.py
 
 fork: run-fork-script setup api-docs
+
+run-local-deps:
+	podman-compose up
