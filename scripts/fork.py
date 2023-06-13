@@ -125,16 +125,15 @@ def main():
         Mutator("scripts/mutations/quay_repo.yaml"),
         Mutator("scripts/mutations/contact_name.yaml"),
         Mutator("scripts/mutations/contact_email.yaml"),
+        Mutator("scripts/mutations/api_path.yaml"),
+        Mutator("scripts/mutations/api_doc_description.yaml"),
+        Mutator("scripts/mutations/api_doc_title.yaml"),
     ])
 
     controller.set_mutator_new_values()
     controller.run_mutators()
 
     print("🍴 All done! The app is all yours now!\n")
-    print("🍴 Here are some things you should do next:\n")
-    print("🍴   1. Update the README.md file with information about your new project.")
-    print("🍴   2. Update the LICENSE file with the correct license for your project.")
-    print("🍴   3. Run the setup and api-docs make targets\n")
 
 if __name__ == "__main__":
     main()

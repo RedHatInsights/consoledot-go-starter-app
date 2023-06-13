@@ -24,11 +24,8 @@ var (
 // @version         1.0
 // @description     This is a sample API for the ConsoleDot Go Starter App.
 // @contact.name   	Adam Drew
-// @contact.url    	https://github.com/RedHatInsights/consoledot-go-starter-app
 // @contact.email  	addrew@redhat.com
-// @license.name  	MIT License
-// @license.url   	https://opensource.org/license/mit/
-// @BasePath  		/api/starter-app/v1
+// @BasePath  		/api/starter-app-api/v1
 func main() {
 	db = dbConnect()
 	router := routes.SetupRouter(apiPath)

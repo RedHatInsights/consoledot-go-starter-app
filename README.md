@@ -55,4 +55,5 @@ The fork script will ask you for some information and then change the files in t
 Once the script is complete there are some manual steps you'll need to perform as well. Don't worry, they're not bad.
 * Change this README to what makes sense for your project
 * Change LICENSE to what make sense for your project
+* Once you've integrated auth remove the whitelist paths from the ClowdApp public webService
 

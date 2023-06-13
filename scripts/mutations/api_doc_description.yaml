@@ -1,0 +1,6 @@
+---
+old_value: "This is a sample API for the ConsoleDot Go Starter App."
+files:
+  - "main.go"
+prompt: "API Doc Description. This is what will appear in your OpenAPI Spec."
+mutation_name: "api doc description"
