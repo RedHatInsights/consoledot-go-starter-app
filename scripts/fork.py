@@ -46,7 +46,7 @@ class Mutator:
     def mutate(self):
         print(f"🍴 Changing {self.mutation_name}")
         for file in self.files:
-            self.mutate_string_in_file(file)
+            self.mutate_file(file)
 
     def mutate_file(self, file):
         #If we are in dry run print and bail
