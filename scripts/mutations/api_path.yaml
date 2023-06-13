@@ -1,0 +1,7 @@
+---
+old_value: "starter-app"
+files:
+  - "deploy/clowdapp.yaml"
+  - "local.env"
+prompt: "Your quay repo. Should be in the form of quay.io/<user or org>/<repo>"
+mutation_name: "quay repo"

@@ -1,0 +1,6 @@
+---
+old_value: "addrew@redhat.com"
+files:
+  - "main.go"
+prompt: "Your email. Will be used for the contact email in the OpenAPI spec."
+mutation_name: "contact email"

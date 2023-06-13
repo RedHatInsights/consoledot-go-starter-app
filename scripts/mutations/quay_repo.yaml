@@ -1,0 +1,6 @@
+---
+old_value: "quay.io/rh_ee_addrew/consoledot-go-starter-app"
+files:
+  - "Makefile"
+prompt: "Your quay repo. Should be in the form of quay.io/<user or org>/<repo>"
+mutation_name: "quay repo"

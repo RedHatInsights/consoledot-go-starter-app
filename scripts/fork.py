@@ -121,7 +121,10 @@ def main():
     print("This script will ask you a few questions and then use that to customize the starter app for you.\n")
 
     controller = Controller([
-        Mutator("scripts/mutations/github_repo.yaml")
+        Mutator("scripts/mutations/github_repo.yaml"),
+        Mutator("scripts/mutations/quay_repo.yaml"),
+        Mutator("scripts/mutations/contact_name.yaml"),
+        Mutator("scripts/mutations/contact_email.yaml"),
     ])
 
     controller.set_mutator_new_values()
