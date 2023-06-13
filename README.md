@@ -2,7 +2,7 @@
 
 As of this writing, this is a work in progress. It isn't quite ready to take out of the oven. That said, if you want to kick it around here's the basics.
 
-1. Clone the app
+1. Clone the app and run the setup make target to install deps and whatnot
 2. Log into ephemeral
 3. Checkout a namespace
 4. Put your namespace into an env var
@@ -12,6 +12,11 @@ As of this writing, this is a work in progress. It isn't quite ready to take out
 
 Example:
 ```bash
+
+$ make setup
+go build -o bin/server main.go
+go install github.com/swaggo/swag/cmd/swag@latest
+
 $ bonfire namespace reserve
 2023-06-13 08:28:27 [    INFO] [          MainThread] namespace console url: https://console-openshift-console.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/k8s/cluster/projects/ephemeral-ratuiz
 ephemeral-ratuiz
