@@ -17,11 +17,11 @@ objects:
       webServices:
         public: 
           enabled: true
-          apiPath: starter-app
+          apiPath: starter-app-api
           whitelistPaths:
           - /healthz
           - /readyz
-          - /api/starter-app/*
+          - /api/starter-app-api/*
     database:
       name: ${DB_NAME}
       version: 12

@@ -40,3 +40,19 @@ https://env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/
 ```
 
 More user-friendly features like a forking script and some cleanup yet to come.
+
+## Forking the Starter App
+Start by forking this repo and checking it out. After you've checked it out you can kick the tires and use it as is. As soon as you are ready to make it your own and build on it you can run the fork script. I suggest you do this in another branch and then merge after you've confirmed everything looks OK.
+
+*NOTE: Before you run the fork script make sure you have a Quay repo set up for your project! You will need the Quay repo URL as part of setup.*
+
+```bash
+$ make fork
+```
+
+The fork script will ask you for some information and then change the files in the repo based on your input. This will do things like change the go module, info in the OpenAPI spec, the API path, change references to the Github and Quay repos and more. Once the script is complete you can remove the scripts directory and commit the changes.
+
+Once the script is complete there are some manual steps you'll need to perform as well. Don't worry, they're not bad.
+* Change this README to what makes sense for your project
+* Change LICENSE to what make sense for your project
+
