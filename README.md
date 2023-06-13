@@ -32,7 +32,7 @@ Before using the starter app there are a few things you'll want to have in place
 If you are able to log into the ephmeral cluster and reserve a namespace you are good. If you have no idea what I'm talking about and think I'm just making words up reach out to DevProd and we'll help get you sorted.
 
 ## Quickstart: Clone & Run
-Want to take it for a test drive before driving it home? Here's go to get started in N minutes where N is impressively small!
+Want to take it for a test drive before driving it home? Here's how to get started in N minutes where N is impressively small!
 
 1. Clone the repo:
 ```bash
@@ -83,11 +83,10 @@ $ xdg-open https://env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.openshi
 ## Fork and Make it Your Own
 Intrigued? You can get started building your own app easily.
 
-*Note: Before going through this process make sure you have a Quay repo set up for your new app. It should have build triggers configured so that it builds new versions of your app when you merge to your branches. This can be done manually, or via app-interface*
-
 1. Fork the starter app repo
-2. Clone your fork
-3. Run the fork script
+2. Create a Quay repo that is set to build from your new forked Github repo
+3. Clone your fork
+4. Run the fork script
 ```bash
 $ make fork
 ```
