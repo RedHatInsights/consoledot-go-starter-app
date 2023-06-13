@@ -80,7 +80,7 @@ class Controller:
     def init_args(self):
         parser = argparse.ArgumentParser()
         parser.add_argument("-d", "--dryrun", type=bool, help="Dry run. Print out the config and exit.", default=False)
-        self.args = self.parser.parse_args()
+        self.args = parser.parse_args()
 
     def set_mutators_dryrun(self):
         for mutator in self.mutators:
@@ -99,13 +99,12 @@ class Controller:
 
     def confirm_mutator_new_values(self):
         print("🍴 Here is what we are going to change:")
-        for mutator in mutators:
+        for mutator in self.mutators:
             mutator.print_new_value_confirmation()
         print("Does this look good? (y/n)")
         confimation = input("> ")
         return confimation == "y"
-
-
+    
 #config = {
 #    "app_name": {"value":"", "desc":"Enter your app short name. This should be lowercase, no spaces. Example: ingress_service or api_backend", "default":"ingress_service"},
 #    "github_repo": {"value":"", "desc":"Your github repo. This will be used as your go package name. Example: github.com/yourname/yourrepo", "default":"", "method": change_github_repo},
@@ -122,11 +121,17 @@ def main():
     print("This script will ask you a few questions and then use that to customize the starter app for you.\n")
 
     controller = Controller([
-        Mutator("mutations/github_repo.yaml")
+        Mutator("scripts/mutations/github_repo.yaml")
     ])
 
     controller.set_mutator_new_values()
     controller.run_mutators()
+
+    print("🍴 All done! The app is all yours now!\n")
+    print("🍴 Here are some things you should do next:\n")
+    print("🍴   1. Update the README.md file with information about your new project.")
+    print("🍴   2. Update the LICENSE file with the correct license for your project.")
+    print("🍴   3. Run the setup and api-docs make targets\n")
 
 if __name__ == "__main__":
     main()
