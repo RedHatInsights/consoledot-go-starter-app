@@ -5,16 +5,11 @@
         "title": "ConsoleDot Go Starter App API",
         "contact": {
             "name": "Adam Drew",
-            "url": "https://github.com/RedHatInsights/consoledot-go-starter-app",
             "email": "addrew@redhat.com"
-        },
-        "license": {
-            "name": "MIT License",
-            "url": "https://opensource.org/license/mit/"
         },
         "version": "1.0"
     },
-    "basePath": "/api/v1",
+    "basePath": "/api/starter-app-api/v1",
     "paths": {
         "/api/starter-app/v1/hello": {
             "get": {
@@ -39,14 +34,14 @@
         },
         "/healthz": {
             "get": {
-                "description": "Determines readiness of the application",
+                "description": "Determines if application is still alive",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "probes"
                 ],
-                "summary": "Determines readiness of the application",
+                "summary": "Determines if application is still alive",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -58,16 +53,16 @@
                 }
             }
         },
-        "/livez": {
+        "/readyz": {
             "get": {
-                "description": "Determines if application is still alive",
+                "description": "Determines readiness of the application",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "probes"
                 ],
-                "summary": "Determines if application is still alive",
+                "summary": "Determines readiness of the application",
                 "responses": {
                     "200": {
                         "description": "OK",

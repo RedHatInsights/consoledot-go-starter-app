@@ -12,12 +12,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "contact": {
             "name": "Adam Drew",
-            "url": "https://github.com/RedHatInsights/consoledot-go-starter-app",
             "email": "addrew@redhat.com"
-        },
-        "license": {
-            "name": "MIT License",
-            "url": "https://opensource.org/license/mit/"
         },
         "version": "{{.Version}}"
     },
@@ -47,27 +42,6 @@ const docTemplate = `{
         },
         "/healthz": {
             "get": {
-                "description": "Determines readiness of the application",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "probes"
-                ],
-                "summary": "Determines readiness of the application",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
-        "/livez": {
-            "get": {
                 "description": "Determines if application is still alive",
                 "produces": [
                     "application/json"
@@ -86,6 +60,27 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/readyz": {
+            "get": {
+                "description": "Determines readiness of the application",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "probes"
+                ],
+                "summary": "Determines readiness of the application",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
         }
     }
 }`
@@ -94,7 +89,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "",
-	BasePath:         "/api/v1",
+	BasePath:         "/api/starter-app-api/v1",
 	Schemes:          []string{},
 	Title:            "ConsoleDot Go Starter App API",
 	Description:      "This is a sample API for the ConsoleDot Go Starter App.",
