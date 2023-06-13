@@ -105,17 +105,6 @@ class Controller:
         confimation = input("> ")
         return confimation == "y"
     
-#config = {
-#    "app_name": {"value":"", "desc":"Enter your app short name. This should be lowercase, no spaces. Example: ingress_service or api_backend", "default":"ingress_service"},
-#    "github_repo": {"value":"", "desc":"Your github repo. This will be used as your go package name. Example: github.com/yourname/yourrepo", "default":"", "method": change_github_repo},
-#    "apidoc_title": {"value":"", "desc":"Human readable title for your API. Example: Ingress Service or API Backend"},
-#    "apidoc_description": {"value":"", "desc":"Human readable description for your API. Example: 'Provides backend services for the Ingress system'"},
-#    "api_path": {"value":"", "desc":"Slug that will be used in the API docs URL. Example: 'ingress-service'"},
-#    "contact_name": {"value":"", "desc":"Name you want listed in the API docs as the contact for this API. Example: 'Jane Doe'"},
-#    "contact_email": {"value":"", "desc":"Email address you want listed in the API docs as the contact for this API. Example: jdoe@redhat.com'"},
-#}
-
-
 def main():
     print("🍴 Welcome to the Starter App Fork Script!\n")
     print("This script will ask you a few questions and then use that to customize the starter app for you.\n")
