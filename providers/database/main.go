@@ -10,6 +10,16 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
+// We use an interface here so that we can mock out the database connection in tests
+// This is good, because it makes testing easy. This is bad because every time you extend what you
+// want to do with the connection pool you will need to extend this interface.
+// For example, if you need to use pgxpool.Pool.Query() you'll need to add its method
+// signature to this interface. That said it shouldn't be much more than a copy and paste
+// from the api docs here: https://pkg.go.dev/github.com/jackc/pgx/v4/pgxpool#Pool
+// Feel free to adopt whatever model makes sense to you. You could abandon the interface
+// and use one of the pgx mocking projects out there. This just seemed to be simplest for a starter-app.
+// Also, if you do end up using this approach remember you'll need to implement mocks
+// for whatever you extend the interface to do.
 type ConnectionPool interface {
 	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
 	Close()

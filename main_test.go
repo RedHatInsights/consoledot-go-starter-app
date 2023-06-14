@@ -16,7 +16,8 @@ type mockQueryRow struct {
 }
 
 func (m *mockQueryRow) Scan(dest ...interface{}) error {
-	dest = append(dest, "mockQueryRow")
+	retVal := "Database : starter_app, User : shadowman"
+	*dest[0].(*string) = retVal
 	return nil
 }
 
@@ -25,7 +26,7 @@ type mockConnectionPool struct {
 }
 
 func (m *mockConnectionPool) QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row {
-	return nil
+	return &mockQueryRow{}
 }
 func (m *mockConnectionPool) Close() {
 }
@@ -70,4 +71,18 @@ func TestHelloRoute(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Equal(t, "{\"hello\":\"world\"}", w.Body.String())
+}
+
+func TestDBInfoRoute(t *testing.T) {
+	mockPool := &mockConnectionPool{
+		name: "mockPool",
+	}
+	router := routes.SetupRouter(apiPath, mockPool)
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", apiPath+"/v1/db-info", nil)
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, "{\"db-info\":\"Database : starter_app, User : shadowman\"}", w.Body.String())
 }
