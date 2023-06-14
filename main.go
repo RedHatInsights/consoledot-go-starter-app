@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"os"
 
 	"github.com/RedHatInsights/consoledot-go-starter-app/config"
@@ -28,7 +29,8 @@ var (
 // @BasePath  		/api/starter-app-api/v1
 func main() {
 	db = dbConnect()
-	router := routes.SetupRouter(apiPath)
+	defer db.Close(context.Background())
+	router := routes.SetupRouter(apiPath, db)
 	initAPIDocs(router)
 	router.Run(conf.RouterBindAddress())
 }

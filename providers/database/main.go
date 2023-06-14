@@ -15,6 +15,5 @@ func Connect(conf *config.Config) (*pgx.Conn, error) {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		return nil, err
 	}
-	defer conn.Close(context.Background())
 	return conn, nil
 }
