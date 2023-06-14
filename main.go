@@ -8,14 +8,13 @@ import (
 	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
 	"github.com/RedHatInsights/consoledot-go-starter-app/routes"
 	"github.com/gin-gonic/gin"
-	"github.com/jackc/pgx/v4/pgxpool"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 var (
 	conf     = config.Load()
-	connPool *pgxpool.Pool
+	connPool database.ConnectionPool
 	apiPath  = makeAPIPath()
 )
 
@@ -38,7 +37,7 @@ func makeAPIPath() string {
 	return "/api/" + os.Getenv("API_PATH")
 }
 
-func dbConnect() *pgxpool.Pool {
+func dbConnect() database.ConnectionPool {
 	connPool, err := database.Connect(conf)
 	if err != nil {
 		panic(err)

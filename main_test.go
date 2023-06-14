@@ -1,16 +1,40 @@
 package main
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/RedHatInsights/consoledot-go-starter-app/routes"
+	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/assert"
 )
 
+type mockQueryRow struct {
+	name string
+}
+
+func (m *mockQueryRow) Scan(dest ...interface{}) error {
+	dest = append(dest, "mockQueryRow")
+	return nil
+}
+
+type mockConnectionPool struct {
+	name string
+}
+
+func (m *mockConnectionPool) QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row {
+	return nil
+}
+func (m *mockConnectionPool) Close() {
+}
+
 func TestReadinessProbe(t *testing.T) {
-	router := routes.SetupRouter(apiPath)
+	mockPool := &mockConnectionPool{
+		name: "mockPool",
+	}
+	router := routes.SetupRouter(apiPath, mockPool)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/readyz", nil)
@@ -21,7 +45,10 @@ func TestReadinessProbe(t *testing.T) {
 }
 
 func TestLivlinessProbeRoute(t *testing.T) {
-	router := routes.SetupRouter(apiPath)
+	mockPool := &mockConnectionPool{
+		name: "mockPool",
+	}
+	router := routes.SetupRouter(apiPath, mockPool)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/healthz", nil)
@@ -32,7 +59,10 @@ func TestLivlinessProbeRoute(t *testing.T) {
 }
 
 func TestHelloRoute(t *testing.T) {
-	router := routes.SetupRouter(apiPath)
+	mockPool := &mockConnectionPool{
+		name: "mockPool",
+	}
+	router := routes.SetupRouter(apiPath, mockPool)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", apiPath+"/v1/hello", nil)

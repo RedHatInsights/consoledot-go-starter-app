@@ -4,16 +4,16 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
 	"github.com/gin-gonic/gin"
-	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-func setupAPIRoutes(router *gin.Engine, apiPath string, connPool *pgxpool.Pool) {
+func setupAPIRoutes(router *gin.Engine, apiPath string, connPool database.ConnectionPool) {
 	apiGroup := router.Group(apiPath + "/v1")
 	addAPIRoutes(apiGroup, connPool)
 }
 
-func addAPIRoutes(apiGroup *gin.RouterGroup, connPool *pgxpool.Pool) {
+func addAPIRoutes(apiGroup *gin.RouterGroup, connPool database.ConnectionPool) {
 	apiGroup.GET("/hello", helloWorld)
 	apiGroup.GET("/db-info", dbInfo(connPool))
 }
@@ -38,7 +38,7 @@ func helloWorld(context *gin.Context) {
 // @Produce      json
 // @Success      200  {object}  map[string]any
 // @Router       /api/starter-app/v1/db-info [get]
-func dbInfo(connPool *pgxpool.Pool) func(context *gin.Context) {
+func dbInfo(connPool database.ConnectionPool) func(context *gin.Context) {
 	var retVal string
 	retStatus := http.StatusOK
 	query := " select 'Database : ' ||current_database()||', '||'User : '|| user db_details;"
