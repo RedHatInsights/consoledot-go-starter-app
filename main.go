@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"os"
 
 	"github.com/RedHatInsights/consoledot-go-starter-app/config"
@@ -9,15 +8,15 @@ import (
 	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
 	"github.com/RedHatInsights/consoledot-go-starter-app/routes"
 	"github.com/gin-gonic/gin"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v4/pgxpool"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 var (
-	conf    = config.Load()
-	db      *pgx.Conn
-	apiPath = makeAPIPath()
+	conf     = config.Load()
+	connPool *pgxpool.Pool
+	apiPath  = makeAPIPath()
 )
 
 // main godoc
@@ -28,9 +27,9 @@ var (
 // @contact.email  	addrew@redhat.com
 // @BasePath  		/api/starter-app-api/v1
 func main() {
-	db = dbConnect()
-	defer db.Close(context.Background())
-	router := routes.SetupRouter(apiPath, db)
+	connPool = dbConnect()
+	defer connPool.Close()
+	router := routes.SetupRouter(apiPath, connPool)
 	initAPIDocs(router)
 	router.Run(conf.RouterBindAddress())
 }
@@ -39,12 +38,12 @@ func makeAPIPath() string {
 	return "/api/" + os.Getenv("API_PATH")
 }
 
-func dbConnect() *pgx.Conn {
-	db, err := database.Connect(conf)
+func dbConnect() *pgxpool.Pool {
+	connPool, err := database.Connect(conf)
 	if err != nil {
 		panic(err)
 	}
-	return db
+	return connPool
 }
 
 func initAPIDocs(router *gin.Engine) {

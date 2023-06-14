@@ -5,17 +5,17 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-func setupAPIRoutes(router *gin.Engine, apiPath string, db *pgx.Conn) {
+func setupAPIRoutes(router *gin.Engine, apiPath string, connPool *pgxpool.Pool) {
 	apiGroup := router.Group(apiPath + "/v1")
-	addAPIRoutes(apiGroup, db)
+	addAPIRoutes(apiGroup, connPool)
 }
 
-func addAPIRoutes(apiGroup *gin.RouterGroup, db *pgx.Conn) {
+func addAPIRoutes(apiGroup *gin.RouterGroup, connPool *pgxpool.Pool) {
 	apiGroup.GET("/hello", helloWorld)
-	apiGroup.GET("/db-info", dbInfo(db))
+	apiGroup.GET("/db-info", dbInfo(connPool))
 }
 
 // helloWorld godoc
@@ -38,11 +38,11 @@ func helloWorld(context *gin.Context) {
 // @Produce      json
 // @Success      200  {object}  map[string]any
 // @Router       /api/starter-app/v1/db-info [get]
-func dbInfo(db *pgx.Conn) func(context *gin.Context) {
+func dbInfo(connPool *pgxpool.Pool) func(context *gin.Context) {
 	var retVal string
 	retStatus := http.StatusOK
 	query := " select 'Database : ' ||current_database()||', '||'User : '|| user db_details;"
-	err := db.QueryRow(context.Background(), query).Scan(&retVal)
+	err := connPool.QueryRow(context.Background(), query).Scan(&retVal)
 	if err != nil {
 		retVal = "Error querying database: " + err.Error()
 		retStatus = http.StatusInternalServerError
