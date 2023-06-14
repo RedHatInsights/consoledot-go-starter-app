@@ -77,7 +77,7 @@ $ curl -X GET https://env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.open
 
 8. Open the OpenAPI docs in a browser
 ```bash
-$ xdg-open https://env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/api/starter-app-api/swagger/index.html
+$ xdg-open https://env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/api/starter-app-api/api_docs/index.html
 ```
 
 ## Fork and Make it Your Own
