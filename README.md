@@ -36,34 +36,34 @@ Want to take it for a test drive before driving it home? Here's how to get start
 
 1. Clone the repo:
 ```bash
-$ git clone git@github.com:RedHatInsights/consoledot-go-starter-app.git
-$ cd consoledot-go-starter-app
+ git clone git@github.com:RedHatInsights/consoledot-go-starter-app.git
+ cd consoledot-go-starter-app
 ```
 
 2. Run the setup make target to install deps, build the app, and build the api docs
 ```bash
-$ make setup
+make setup
 ```
 
 3. Reserve an ephemeral namespace and put its name in an environment variable. *Note: you need to be logged into the ephemeral cluster.*
 ```bash
-$ bonfire namespace reserve
+bonfire namespace reserve
 2023-06-13 08:28:27 [    INFO] [          MainThread] namespace console url: https://console-openshift-console.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/k8s/cluster/projects/ephemeral-ratuiz
 ephemeral-ratuiz
 
-$ NAMESPACE=ephemeral-ratuiz
+NAMESPACE=ephemeral-ratuiz
 ```
 
 4. Launch the starter app in your ephemeral environment:
 ```bash
-$ make run-ephemeral NAMESPACE=$NAMESPACE
+make run-ephemeral NAMESPACE=$NAMESPACE
 oc process -f deploy/clowdapp.yaml -p NAMESPACE=ephemeral-ratuiz -p ENV_NAME=env-ephemeral-ratuiz  IMAGE=quay.io/rh_ee_addrew/consoledot-go-starter-app IMAGE_TAG=latest | oc create -f -
 clowdapp.cloud.redhat.com/go-starter-app created
 ```
 
 5. Get the route associated with the app:
 ```bash
-$ oc get route --namespace $NAMESPACE | grep go-starter-app
+oc get route --namespace $NAMESPACE | grep go-starter-app
 go-starter-app-app-t57jg                    env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com        /api/starter-app-api/    go-starter-app-app                    auth       edge/Redirect   None
 ```
 
@@ -71,13 +71,13 @@ go-starter-app-app-t57jg                    env-ephemeral-ratuiz-8tlb3rve.apps.c
 
 7. Hit the API:
 ```bash
-$ curl -X GET https://env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/api/starter-app-api/v1/hello
+curl -X GET https://env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/api/starter-app-api/v1/hello
 {"hello":"world"}
 ```
 
 8. Open the OpenAPI docs in a browser
 ```bash
-$ xdg-open https://env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/api/starter-app-api/api_docs/index.html
+xdg-open https://env-ephemeral-ratuiz-8tlb3rve.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/api/starter-app-api/api_docs/index.html
 ```
 
 ## Fork and Make it Your Own
@@ -100,7 +100,7 @@ Running in ephemeral is cool, and useful for testing - as well as showing your a
 
 When you are ready to get to work you can bring local dependencies up with the `run-local-deps` make target:
 ``` bash
-$ make run-local-deps
+make run-local-deps
 ```
 Now you can run your app in the IDE debugger and it will automatically connect to the required dependencies. The configuration management system abstracts away the difference between running under Clowder on a cluster or running locally.
 
@@ -140,7 +140,7 @@ Swag is a very powerful tool and we barely scratch the surface in this project. 
 
 To generate new versions of the docs as you make changes run the `api-docs` make target:
 ```bash
-$ make api-docs
+make api-docs
 ```
 ## Web Framework: Gin
 We had to choose what kind of app to develop for the starter app and we chose a simple web API. That said, many or maybe even most console apps are not web APIs. We chose a web API because it is simple to demo and understand, and requires very little code. "Platform App that isn't an API and doesn't do anything" was a bit wide of a canvas, so we went with a web API. If you need to develop something that isn't a web API it should be very easy to remove the gin parts and leave everything else.
@@ -157,7 +157,7 @@ That said, you are free to remove it and use what you like. Gin is a recomendati
 Unit tests are provided for the web API. Run the `test` make target to run the tests:
 
 ```bash
-$ make test
+make test
 ```
 
 The test implementation can be found in `main_test.go` and is a very simple example of the [test pattern that Gin recommends](https://gin-gonic.com/docs/testing/). It should be easy to observe the pattern and scale it up. That said, these are just unit tests for the routes. You'll want to think about other testing strategies like end to end, smoke, and integration as you develop.
