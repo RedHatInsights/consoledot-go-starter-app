@@ -1,6 +1,6 @@
 # ConsoleDot Golang Starter App
 
-Getting started writing a ConsoleDot app can be confusing. There's a lot of Red Hat "special sauce" that an application developer may not be familiar with. This starter app provides developers with a simple way to bootstrap new applications that are built for the platform from the ground-up. Developers of existing applicaitons can also benefit by using this project as a reference for how to solve common problems.
+Getting started writing a ConsoleDot app can be confusing. There's a lot of Red Hat "special sauce" that an application developer may not be familiar with. This starter app provides developers with a simple way to bootstrap new applications that are built for the platform from the ground-up. Developers of existing applications can also benefit by using this project as a reference for how to solve common problems.
 
 The starter app is designed to be as simple as possible. It contains only the minimal amount of code required to bootstrap an app on the ConsoleDot platform. There's no example code on how to implement APIs or work with databases; we expect you know that. Instead the project focus is on the stuff you may not know about the platform, and making those things easy. Additionally, the starter app was designed to be as unopinionated as possible. The choice of libraries is kept minimal and low level, with great care put into their selection. That said, you should be able to replace anything you want to, using what's here as an example implmentation.
 
@@ -13,7 +13,7 @@ The starter app is designed to be as simple as possible. It contains only the mi
 * Clowder Provider integration
     * *Note: V1 only supports Postgres. More providers to come.*
 * Web API via the [Gin Web Framework](https://gin-gonic.com/docs/)
-* Livliness and Readiness probes
+* Liveliness and Readiness probes
 * Easy configuration system that allows for config from Clowder and Environment Variables
 * Unit Tests
 
