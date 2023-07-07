@@ -1,0 +1,34 @@
+{
+    "publicPort": 8000,
+    "metricsPath": "/metrics",
+    "metricsPort": 9000,
+    "logging": {
+        "type": "cloudwatch",
+        "cloudwatch": {
+            "accessKeyId": "ACCESS_KEY",
+            "secretAccessKey": "SECRET_ACCESS_KEY",
+            "region": "EU",
+            "logGroup": "base_app"
+            }
+        },
+    "database": {
+        "name": "starter_app",
+        "username": "shadowman",
+        "password": "password",
+        "hostname": "yearofthelinuxdesktop",
+        "port": 5432,
+        "pgPass": "testing",
+        "adminPassword": "nah",
+        "adminUsername": "also-nah",
+        "sslMode": "verify-full"
+    },
+    "endpoints": [
+        {
+            "name": "endpoint1",
+            "app": "app",
+            "hostname": "0.0.0.0",
+            "port": 8000,
+            "apiPath": "starter-app-api"
+        }
+    ]
+}

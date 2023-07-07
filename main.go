@@ -1,8 +1,6 @@
 package main
 
 import (
-	"os"
-
 	"github.com/RedHatInsights/consoledot-go-starter-app/config"
 	"github.com/RedHatInsights/consoledot-go-starter-app/docs"
 	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
@@ -34,7 +32,7 @@ func main() {
 }
 
 func makeAPIPath() string {
-	return "/api/" + os.Getenv("API_PATH")
+	return conf.GetApiPath()
 }
 
 func dbConnect() database.ConnectionPool {
