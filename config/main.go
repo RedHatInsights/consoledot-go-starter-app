@@ -11,13 +11,15 @@ import (
 )
 
 const (
-	//Environment Variable file
-	envFile = "local.env"
-	//CD App Config file used when running locally
+	//Config Files
+	envFile         = "local.env"
 	localConfigFile = "local_config.json"
 	//Environment Variables
 	ginBindAddrEnvVar = "GIN_BIND_ADDR"
-	postgres          = "postgres://"
+	deploymentName    = "DEPLOYMENT_NAME"
+	//Strings
+	postgres  = "postgres://"
+	apiPrefix = "/api/"
 )
 
 func Load() *Config {
@@ -31,14 +33,14 @@ type Config struct {
 }
 
 func (c *Config) GetApiPath() string {
-	appName := os.Getenv("DEPLOYMENT_NAME")
+	appName := os.Getenv(deploymentName)
 	//iterate through AppConfig.Endpoints looking for the one with the name "app"
 	for _, endpoint := range c.AppConfig.Endpoints {
 		if endpoint.Name == appName {
-			return "/api/" + fmt.Sprintf("%v", endpoint.ApiPath)
+			return apiPrefix + fmt.Sprintf("%v", endpoint.ApiPath)
 		}
 	}
-	return "/api/" + appName
+	return apiPrefix + appName
 }
 
 func (c *Config) RouterBindAddress() string {
