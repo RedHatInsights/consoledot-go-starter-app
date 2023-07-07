@@ -31,7 +31,7 @@ type Config struct {
 }
 
 func (c *Config) GetApiPath() string {
-	appName := "app"
+	appName := os.Getenv("DEPLOYMENT_NAME")
 	//iterate through AppConfig.Endpoints looking for the one with the name "app"
 	for _, endpoint := range c.AppConfig.Endpoints {
 		if endpoint.Name == appName {
