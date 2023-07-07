@@ -13,7 +13,7 @@ import (
 var (
 	conf     = config.Load()
 	connPool database.ConnectionPool
-	apiPath  = makeAPIPath()
+	apiPath  = conf.GetApiPath()
 )
 
 // main godoc
@@ -29,10 +29,6 @@ func main() {
 	router := routes.SetupRouter(apiPath, connPool)
 	initAPIDocs(router)
 	router.Run(conf.RouterBindAddress())
-}
-
-func makeAPIPath() string {
-	return conf.GetApiPath()
 }
 
 func dbConnect() database.ConnectionPool {
