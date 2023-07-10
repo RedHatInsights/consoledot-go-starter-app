@@ -1,8 +1,6 @@
 BINARY_NAME=server
 IMAGE=quay.io/rh_ee_addrew/consoledot-go-starter-app
 IMAGE_TAG=latest
-GOROOT=${HOME}/go
-export PATH := ${GOROOT}/bin:$(PATH)
 
 build:
 	go build -o bin/${BINARY_NAME} main.go
@@ -15,6 +13,7 @@ clean:
 	rm bin/${BINARY_NAME}
 
 test:
+	go clean -cache
 	go test -v ./...
 
 setup: build

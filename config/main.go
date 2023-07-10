@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
 
 	clowder "github.com/redhatinsights/app-common-go/pkg/api/v1"
@@ -12,36 +11,40 @@ import (
 )
 
 const (
-	envFile          = "local.env"
-	hostEnvVar       = "HOST"
-	publicPortEnvVar = "PUBLIC_PORT"
-	postgres         = "postgres://"
-
-	db_user     = "DB_USER"
-	db_password = "DB_PASSWORD"
-	db_hostname = "DB_HOSTNAME"
-	db_port     = "DB_PORT"
-	db_name     = "DB_NAME"
+	//Config Files
+	envFile         = "local.env"
+	localConfigFile = "local_config.json"
+	//Environment Variables
+	ginBindAddrEnvVar = "GIN_BIND_ADDR"
+	deploymentName    = "DEPLOYMENT_NAME"
+	//Strings
+	postgres  = "postgres://"
+	apiPrefix = "/api/"
 )
 
 func Load() *Config {
-	c := Config{
-		EnvVars: make(map[string]string),
-		AppConfig: &clowder.AppConfig{
-			Database: &clowder.DatabaseConfig{},
-		},
-	}
+	c := Config{}
 	c.Load()
 	return &c
 }
 
 type Config struct {
 	AppConfig *clowder.AppConfig
-	EnvVars   map[string]string
+}
+
+func (c *Config) GetApiPath() string {
+	depName := os.Getenv(deploymentName)
+	//iterate through AppConfig.Endpoints looking for the one with the name "app"
+	for _, endpoint := range c.AppConfig.Endpoints {
+		if endpoint.App == depName {
+			return apiPrefix + fmt.Sprintf("%v", endpoint.ApiPath)
+		}
+	}
+	return apiPrefix + depName
 }
 
 func (c *Config) RouterBindAddress() string {
-	host := os.Getenv(hostEnvVar) + ":"
+	host := os.Getenv(ginBindAddrEnvVar) + ":"
 
 	//Append AppConfig.PublicPort to host
 	host += fmt.Sprint(*c.AppConfig.PublicPort)
@@ -66,8 +69,16 @@ func (c *Config) Load() {
 	if clowder.IsClowderEnabled() {
 		c.AppConfig = clowder.LoadedConfig
 	} else {
-		c.setAppConfigFromEnvVars()
+		c.loadConfigFromLocalFile()
 	}
+}
+
+func (c *Config) loadConfigFromLocalFile() {
+	conf, err := clowder.LoadConfig(localConfigFile)
+	if err != nil {
+		panic(err)
+	}
+	c.AppConfig = conf
 }
 
 func (c *Config) loadEnvVars() {
@@ -77,25 +88,4 @@ func (c *Config) loadEnvVars() {
 		//log.Fatalf("Some error occured. Err: %s", err)
 		panic(err)
 	}
-}
-
-func (c *Config) setAppConfigFromEnvVars() {
-	//Set the AppConfig public port from the publicPort const
-	c.AppConfig.PublicPort = c.getEnvVarIntPtr(publicPortEnvVar)
-	c.AppConfig.Database.Username = os.Getenv(db_user)
-	c.AppConfig.Database.Password = os.Getenv(db_password)
-	c.AppConfig.Database.Hostname = os.Getenv(db_hostname)
-	c.AppConfig.Database.Port = *c.getEnvVarIntPtr(db_port)
-	c.AppConfig.Database.Name = os.Getenv(db_name)
-}
-
-func (c *Config) getEnvVarIntPtr(envVar string) *int {
-	// string to int
-	i, err := strconv.Atoi(os.Getenv(envVar))
-	if err != nil {
-		// ... handle error
-		// log.Fatalf("Some error occured. Err: %s", err)
-		panic(err)
-	}
-	return &i
 }

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"os"
-
 	"github.com/RedHatInsights/consoledot-go-starter-app/config"
 	"github.com/RedHatInsights/consoledot-go-starter-app/docs"
 	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
@@ -15,7 +13,7 @@ import (
 var (
 	conf     = config.Load()
 	connPool database.ConnectionPool
-	apiPath  = makeAPIPath()
+	apiPath  = conf.GetApiPath()
 )
 
 // main godoc
@@ -31,10 +29,6 @@ func main() {
 	router := routes.SetupRouter(apiPath, connPool)
 	initAPIDocs(router)
 	router.Run(conf.RouterBindAddress())
-}
-
-func makeAPIPath() string {
-	return "/api/" + os.Getenv("API_PATH")
 }
 
 func dbConnect() database.ConnectionPool {
