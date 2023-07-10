@@ -13,6 +13,7 @@ clean:
 	rm bin/${BINARY_NAME}
 
 test:
+	go clean -cache
 	go test -v ./...
 
 setup: build

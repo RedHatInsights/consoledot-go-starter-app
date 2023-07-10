@@ -33,14 +33,14 @@ type Config struct {
 }
 
 func (c *Config) GetApiPath() string {
-	appName := os.Getenv(deploymentName)
+	depName := os.Getenv(deploymentName)
 	//iterate through AppConfig.Endpoints looking for the one with the name "app"
 	for _, endpoint := range c.AppConfig.Endpoints {
-		if endpoint.Name == appName {
+		if endpoint.App == depName {
 			return apiPrefix + fmt.Sprintf("%v", endpoint.ApiPath)
 		}
 	}
-	return apiPrefix + appName
+	return apiPrefix + depName
 }
 
 func (c *Config) RouterBindAddress() string {
