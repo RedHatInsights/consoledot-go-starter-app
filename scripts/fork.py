@@ -115,6 +115,7 @@ def main():
         Mutator("scripts/mutations/contact_name.yaml"),
         Mutator("scripts/mutations/contact_email.yaml"),
         Mutator("scripts/mutations/api_path.yaml"),
+        Mutator("scripts/mutations/deployment_name.yaml"),
         Mutator("scripts/mutations/api_doc_description.yaml"),
         Mutator("scripts/mutations/api_doc_title.yaml"),
     ])

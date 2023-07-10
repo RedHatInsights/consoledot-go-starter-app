@@ -1,8 +1,8 @@
 ---
 old_value: "starter-app-api"
 files:
+  - "local_config.json"
   - "deploy/clowdapp.yaml"
-  - "local.env"
   - "main.go"
 prompt: "Your api path. This is what will be used to access your api. Should be short, hyphanated, lowercase, and URL safe. Example: starter-app-api. Don't put /api/ in front of it or any slashes."
 mutation_name: "api path"
