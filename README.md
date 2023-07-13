@@ -123,8 +123,8 @@ This project uses [Swag](https://github.com/swaggo/swag/) to generate OpenAPI do
 
 ```go
 // helloWorld godoc
-// @Summary      Recieve a greeting
-// @Description  Recieve a greeting from the API
+// @Summary      Receive a greeting
+// @Description  Receive a greeting from the API
 // @Tags         api
 // @Produce      json
 // @Success      200  {object}  map[string]any
