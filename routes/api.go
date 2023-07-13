@@ -24,7 +24,7 @@ func addAPIRoutes(apiGroup *gin.RouterGroup, connPool database.ConnectionPool) {
 // @Tags         api
 // @Produce      json
 // @Success      200  {object}  map[string]any
-// @Router       /api/starter-app/v1/hello [get]
+// @Router       /api/starter-app-api/v1/hello [get]
 func helloWorld(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{
 		"hello": "world",
@@ -37,7 +37,7 @@ func helloWorld(context *gin.Context) {
 // @Tags         api
 // @Produce      json
 // @Success      200  {object}  map[string]any
-// @Router       /api/starter-app/v1/db-info [get]
+// @Router       /api/starter-app-api/v1/db-info [get]
 func dbInfo(connPool database.ConnectionPool) func(context *gin.Context) {
 	var retVal string
 	retStatus := http.StatusOK
