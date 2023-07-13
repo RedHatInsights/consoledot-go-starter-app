@@ -14,8 +14,8 @@
     "database": {
         "name": "starter_app",
         "username": "shadowman",
-        "password": "password",
-        "hostname": "yearofthelinuxdesktop",
+        "password": "yearofthelinuxdesktop",
+        "hostname": "0.0.0.0",
         "port": 5432,
         "pgPass": "testing",
         "adminPassword": "nah",
