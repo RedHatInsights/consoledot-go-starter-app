@@ -19,7 +19,28 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/starter-app/v1/hello": {
+        "/api/starter-app-api/v1/db-info": {
+            "get": {
+                "description": "Query the API to get some database informaiton",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "api"
+                ],
+                "summary": "Get database info",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/starter-app-api/v1/hello": {
             "get": {
                 "description": "Recieve a greeting from the API",
                 "produces": [

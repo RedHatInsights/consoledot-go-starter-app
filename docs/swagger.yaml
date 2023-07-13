@@ -7,7 +7,21 @@ info:
   title: ConsoleDot Go Starter App API
   version: "1.0"
 paths:
-  /api/starter-app/v1/hello:
+  /api/starter-app-api/v1/db-info:
+    get:
+      description: Query the API to get some database informaiton
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get database info
+      tags:
+      - api
+  /api/starter-app-api/v1/hello:
     get:
       description: Recieve a greeting from the API
       produces:
