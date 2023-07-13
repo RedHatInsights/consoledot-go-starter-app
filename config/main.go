@@ -36,8 +36,8 @@ func (c *Config) GetApiPath() string {
 	depName := os.Getenv(deploymentName)
 	//iterate through AppConfig.Endpoints looking for the one with the name "app"
 	for _, endpoint := range c.AppConfig.Endpoints {
-		if endpoint.App == depName {
-			return apiPrefix + fmt.Sprintf("%v", endpoint.ApiPath)
+		if endpoint.Name == depName {
+			return fmt.Sprintf("%v", endpoint.ApiPath)
 		}
 	}
 	return apiPrefix + depName
