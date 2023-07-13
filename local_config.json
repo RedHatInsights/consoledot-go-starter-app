@@ -24,11 +24,11 @@
     },
     "endpoints": [
         {
-            "name": "endpoint1",
-            "app": "starter-app-depolyment",
+            "name": "starter-app-depolyment",
+            "app": "go-starter-app",
             "hostname": "0.0.0.0",
             "port": 8000,
-            "apiPath": "starter-app-api"
+            "apiPath": "/api/starter-app-api"
         }
     ]
 }
