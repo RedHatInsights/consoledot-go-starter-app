@@ -8,7 +8,7 @@ import (
 
 func setupProbes(router *gin.Engine, apiPath string) {
 	router.GET("/readyz", readinessProbe)
-	router.GET("/healthz", livelinessProbe)
+	router.GET("/livez", livelinessProbe)
 }
 
 // readinessProbe godoc
