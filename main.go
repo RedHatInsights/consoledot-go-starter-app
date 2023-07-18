@@ -1,11 +1,14 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/RedHatInsights/consoledot-go-starter-app/config"
 	"github.com/RedHatInsights/consoledot-go-starter-app/docs"
 	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
 	"github.com/RedHatInsights/consoledot-go-starter-app/routes"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -26,9 +29,15 @@ var (
 func main() {
 	connPool = dbConnect()
 	defer connPool.Close()
+	go servePrometheusMetrics()
 	router := routes.SetupRouter(apiPath, connPool)
 	initAPIDocs(router)
 	router.Run(conf.RouterBindAddress())
+}
+
+func servePrometheusMetrics() {
+	http.Handle("/metrics", promhttp.Handler())
+	http.ListenAndServe(":9000", nil)
 }
 
 func dbConnect() database.ConnectionPool {
