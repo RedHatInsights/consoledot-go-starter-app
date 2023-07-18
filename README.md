@@ -16,6 +16,8 @@ The starter app is designed to be as simple as possible. It contains only the mi
 * Liveliness and Readiness probes
 * Easy configuration system that allows for config from Clowder and Environment Variables
 * Unit Tests
+* Logging via [zerolog](https://github.com/rs/zerolog) along with Gin integration via the [gin-zerolog](https://github.com/dn365/gin-zerolog) middleware
+* Metrics via Prometheus client
 
 ## Requirements
 * Golang 1.18.8 or higher
