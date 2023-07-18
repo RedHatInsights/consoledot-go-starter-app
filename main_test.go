@@ -52,7 +52,7 @@ func TestLivlinessProbeRoute(t *testing.T) {
 	router := routes.SetupRouter(apiPath, mockPool)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/healthz", nil)
+	req, _ := http.NewRequest("GET", "/livez", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)

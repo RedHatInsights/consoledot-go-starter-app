@@ -14,12 +14,20 @@ objects:
     - name: starter-app-depolyment
       podSpec:
         image: ${IMAGE}:${IMAGE_TAG}
+        livenessProbe: 
+          httpGet:
+            path: /livez
+            port: 8080
+        readinessProbe: 
+          httpGet:
+            path: /readyz
+            port: 8080
       webServices:
         public: 
           enabled: true
           apiPath: starter-app-api
           whitelistPaths:
-          - /healthz
+          - /livez
           - /readyz
           - /api/starter-app-api/*
     database:
