@@ -1,15 +1,20 @@
 package routes
 
 import (
-	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
+	"github.com/RedHatInsights/consoledot-go-starter-app/providers"
 	ginzerolog "github.com/dn365/gin-zerolog"
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter(apiPath string, connPool database.ConnectionPool) *gin.Engine {
+var (
+	providerManager providers.Providers
+)
+
+func SetupRouter(apiPath string, pManager providers.Providers) *gin.Engine {
+	providerManager = pManager
 	router := gin.Default()
 	router.Use(ginzerolog.Logger("gin"))
 	setupProbes(router, apiPath)
-	setupAPIRoutes(router, apiPath, connPool)
+	setupAPIRoutes(router, apiPath)
 	return router
 }

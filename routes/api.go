@@ -5,20 +5,19 @@ import (
 	"net/http"
 
 	"github.com/RedHatInsights/consoledot-go-starter-app/metrics"
-	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
 	"github.com/gin-gonic/gin"
 
 	"github.com/rs/zerolog/log"
 )
 
-func setupAPIRoutes(router *gin.Engine, apiPath string, connPool database.ConnectionPool) {
+func setupAPIRoutes(router *gin.Engine, apiPath string) {
 	apiGroup := router.Group(apiPath + "/v1")
-	addAPIRoutes(apiGroup, connPool)
+	addAPIRoutes(apiGroup)
 }
 
-func addAPIRoutes(apiGroup *gin.RouterGroup, connPool database.ConnectionPool) {
+func addAPIRoutes(apiGroup *gin.RouterGroup) {
 	apiGroup.GET("/hello", helloWorld)
-	apiGroup.GET("/db-info", dbInfo(connPool))
+	apiGroup.GET("/db-info", dbInfo)
 }
 
 // helloWorld godoc
@@ -42,11 +41,11 @@ func helloWorld(context *gin.Context) {
 // @Produce      json
 // @Success      200  {object}  map[string]any
 // @Router       /api/starter-app-api/v1/db-info [get]
-func dbInfo(connPool database.ConnectionPool) func(context *gin.Context) {
+func dbInfo(ginContext *gin.Context) {
 	var retVal string
 	retStatus := http.StatusOK
 	query := " select 'Database : ' ||current_database()||', '||'User : '|| user db_details;"
-	err := connPool.QueryRow(context.Background(), query).Scan(&retVal)
+	err := providerManager.DBConnectionPool.QueryRow(context.Background(), query).Scan(&retVal)
 	if err != nil {
 		metrics.IncrementErrors()
 		log.Error().Err(err).Msg("Error querying database")
@@ -54,9 +53,8 @@ func dbInfo(connPool database.ConnectionPool) func(context *gin.Context) {
 		retStatus = http.StatusInternalServerError
 	}
 	metrics.IncrementRequests()
-	return func(context *gin.Context) {
-		context.JSON(retStatus, gin.H{
-			"db-info": retVal,
-		})
-	}
+
+	ginContext.JSON(retStatus, gin.H{
+		"db-info": retVal,
+	})
 }
