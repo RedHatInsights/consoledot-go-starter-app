@@ -33,7 +33,7 @@ func main() {
 	initLogging()
 
 	var providerCloseFunc func()
-	providerManager, providerCloseFunc = initProviders()
+	providerManager, providerCloseFunc = providers.Init(conf)
 	defer providerCloseFunc()
 
 	// Serve the prometheus metrics
@@ -44,15 +44,6 @@ func main() {
 	initAPIDocs(router)
 	// Run the router
 	router.Run(conf.RouterBindAddress())
-}
-
-func initProviders() (providers.Providers, func()) {
-	p := providers.Init(conf)
-	return p, func() {
-		if p.DBConnectionPool != nil {
-			p.DBConnectionPool.Close()
-		}
-	}
 }
 
 // initLogging sets up the logging

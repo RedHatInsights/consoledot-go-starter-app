@@ -12,7 +12,7 @@ type Providers struct {
 	DBConnectionPool database.ConnectionPool
 }
 
-func Init(conf *config.Config) Providers {
+func Init(conf *config.Config) (Providers, func()) {
 	providers := Providers{
 		DBConnectionPool: nil,
 	}
@@ -20,7 +20,11 @@ func Init(conf *config.Config) Providers {
 		providers.DBConnectionPool = dbConnect(conf)
 
 	}
-	return providers
+	return providers, func() {
+		if providers.DBConnectionPool != nil {
+			providers.DBConnectionPool.Close()
+		}
+	}
 }
 
 // dbConnect returns the datbase connection pool
