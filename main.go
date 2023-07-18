@@ -3,8 +3,10 @@ package main
 import (
 	"github.com/RedHatInsights/consoledot-go-starter-app/config"
 	"github.com/RedHatInsights/consoledot-go-starter-app/docs"
+	"github.com/RedHatInsights/consoledot-go-starter-app/metrics"
 	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
 	"github.com/RedHatInsights/consoledot-go-starter-app/routes"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -26,6 +28,7 @@ var (
 func main() {
 	connPool = dbConnect()
 	defer connPool.Close()
+	go metrics.Serve()
 	router := routes.SetupRouter(apiPath, connPool)
 	initAPIDocs(router)
 	router.Run(conf.RouterBindAddress())
