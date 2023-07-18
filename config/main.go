@@ -32,6 +32,11 @@ type Config struct {
 	AppConfig *clowder.AppConfig
 }
 
+// Get metrics port and prepend with a colon
+func (c *Config) GetMetricsPort() string {
+	return fmt.Sprintf(":%v", c.AppConfig.MetricsPort)
+}
+
 func (c *Config) GetApiPath() string {
 	depName := os.Getenv(deploymentName)
 	//iterate through AppConfig.Endpoints looking for the one with the name "app"

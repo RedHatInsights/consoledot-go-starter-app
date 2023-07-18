@@ -37,7 +37,7 @@ func main() {
 	connPool = dbConnect()
 	defer connPool.Close()
 	// Serve the prometheus metrics
-	go metrics.Serve()
+	go metrics.Serve(conf)
 	// Set up the Gin router
 	router := routes.SetupRouter(apiPath, connPool)
 	// Set up the OpenAPI docs

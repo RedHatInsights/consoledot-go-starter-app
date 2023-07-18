@@ -3,6 +3,7 @@ package metrics
 import (
 	"net/http"
 
+	"github.com/RedHatInsights/consoledot-go-starter-app/config"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -24,9 +25,9 @@ var (
 	})
 )
 
-func Serve() {
-	http.Handle(route, promhttp.Handler())
-	http.ListenAndServe(port, nil)
+func Serve(conf *config.Config) {
+	http.Handle(conf.AppConfig.MetricsPath, promhttp.Handler())
+	http.ListenAndServe(conf.GetMetricsPort(), nil)
 }
 
 func IncrementRequests() {
