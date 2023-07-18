@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/RedHatInsights/consoledot-go-starter-app/providers"
 	"github.com/RedHatInsights/consoledot-go-starter-app/routes"
 	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/assert"
@@ -31,11 +32,16 @@ func (m *mockConnectionPool) QueryRow(ctx context.Context, sql string, args ...i
 func (m *mockConnectionPool) Close() {
 }
 
-func TestReadinessProbe(t *testing.T) {
-	mockPool := &mockConnectionPool{
-		name: "mockPool",
+var (
+	mockProviderManager = providers.Providers{
+		DBConnectionPool: &mockConnectionPool{
+			name: "mockPool",
+		},
 	}
-	router := routes.SetupRouter(apiPath, mockPool)
+)
+
+func TestReadinessProbe(t *testing.T) {
+	router := routes.SetupRouter(apiPath, mockProviderManager)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/readyz", nil)
@@ -46,10 +52,7 @@ func TestReadinessProbe(t *testing.T) {
 }
 
 func TestLivlinessProbeRoute(t *testing.T) {
-	mockPool := &mockConnectionPool{
-		name: "mockPool",
-	}
-	router := routes.SetupRouter(apiPath, mockPool)
+	router := routes.SetupRouter(apiPath, mockProviderManager)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/livez", nil)
@@ -60,10 +63,7 @@ func TestLivlinessProbeRoute(t *testing.T) {
 }
 
 func TestHelloRoute(t *testing.T) {
-	mockPool := &mockConnectionPool{
-		name: "mockPool",
-	}
-	router := routes.SetupRouter(apiPath, mockPool)
+	router := routes.SetupRouter(apiPath, mockProviderManager)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", apiPath+"/v1/hello", nil)
@@ -74,10 +74,7 @@ func TestHelloRoute(t *testing.T) {
 }
 
 func TestDBInfoRoute(t *testing.T) {
-	mockPool := &mockConnectionPool{
-		name: "mockPool",
-	}
-	router := routes.SetupRouter(apiPath, mockPool)
+	router := routes.SetupRouter(apiPath, mockProviderManager)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", apiPath+"/v1/db-info", nil)

@@ -1,12 +1,10 @@
 package main
 
 import (
-	"os"
-
 	"github.com/RedHatInsights/consoledot-go-starter-app/config"
 	"github.com/RedHatInsights/consoledot-go-starter-app/docs"
 	"github.com/RedHatInsights/consoledot-go-starter-app/metrics"
-	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
+	"github.com/RedHatInsights/consoledot-go-starter-app/providers"
 	"github.com/RedHatInsights/consoledot-go-starter-app/routes"
 
 	"github.com/rs/zerolog"
@@ -18,9 +16,9 @@ import (
 )
 
 var (
-	conf     = config.Load()
-	connPool database.ConnectionPool
-	apiPath  = conf.GetApiPath()
+	conf            = config.Load()
+	providerManager providers.Providers
+	apiPath         = conf.GetApiPath()
 )
 
 // main godoc
@@ -33,13 +31,15 @@ var (
 func main() {
 	// Initialize logging
 	initLogging()
-	// Create the database connection pool and defer closing it
-	connPool = dbConnect()
-	defer connPool.Close()
+
+	var providerCloseFunc func(providers.Providers)
+	providerManager, providerCloseFunc = providers.Init(conf)
+	defer providerCloseFunc(providerManager)
+
 	// Serve the prometheus metrics
 	go metrics.Serve(conf)
 	// Set up the Gin router
-	router := routes.SetupRouter(apiPath, connPool)
+	router := routes.SetupRouter(apiPath, providerManager)
 	// Set up the OpenAPI docs
 	initAPIDocs(router)
 	// Run the router
@@ -51,16 +51,6 @@ func initLogging() {
 	// Set the default log level
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	log.Info().Msg("Starting ConsoleDot Go Starter App")
-}
-
-// dbConnect returns the datbase connection pool
-func dbConnect() database.ConnectionPool {
-	connPool, err := database.Connect(conf)
-	if err != nil {
-		log.Error().Err(err).Msg("Error connecting to database. Exiting ...")
-		os.Exit(1)
-	}
-	return connPool
 }
 
 // initAPIDocs sets up the swagger (openAPI) docs
