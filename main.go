@@ -32,9 +32,9 @@ func main() {
 	// Initialize logging
 	initLogging()
 
-	var closeFunc func()
-	providerManager, closeFunc = initProviders()
-	defer closeFunc()
+	var providerCloseFunc func()
+	providerManager, providerCloseFunc = initProviders()
+	defer providerCloseFunc()
 
 	// Serve the prometheus metrics
 	go metrics.Serve(conf)
