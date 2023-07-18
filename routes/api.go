@@ -7,6 +7,8 @@ import (
 	"github.com/RedHatInsights/consoledot-go-starter-app/metrics"
 	"github.com/RedHatInsights/consoledot-go-starter-app/providers/database"
 	"github.com/gin-gonic/gin"
+
+	"github.com/rs/zerolog/log"
 )
 
 func setupAPIRoutes(router *gin.Engine, apiPath string, connPool database.ConnectionPool) {
@@ -47,6 +49,7 @@ func dbInfo(connPool database.ConnectionPool) func(context *gin.Context) {
 	err := connPool.QueryRow(context.Background(), query).Scan(&retVal)
 	if err != nil {
 		metrics.IncrementErrors()
+		log.Error().Err(err).Msg("Error querying database")
 		retVal = "Error querying database: " + err.Error()
 		retStatus = http.StatusInternalServerError
 	}
