@@ -166,4 +166,10 @@ make test
 
 The test implementation can be found in `main_test.go` and is a very simple example of the [test pattern that Gin recommends](https://gin-gonic.com/docs/testing/). It should be easy to observe the pattern and scale it up. That said, these are just unit tests for the routes. You'll want to think about other testing strategies like end to end, smoke, and integration as you develop.
 
+## Logging
+Logging is provided via Zerolog and the gin-zerolog middleware. The Zerolog API is very easy to use and makes writing structured logs a breeze. Everything you'd want to kow (and more!) is available in the [Zerolog README](https://github.com/rs/zerolog). Simple example of logging messages and errors can be seen in `main.go` on app start and database connection time.
 
+The Gin web framework is initialized with the gin-zerolog middleware. This will automatically create nice structured logs for all route access. More info on gin-zerolog can be found [in the project repo](https://github.com/dn365/gin-zerolog).
+
+## Metrics
+A Prometheus collector is started on port 9000 in accordance with platform best practices. All metrics initialization and metrics methods are centralized in the `metrics` module. You are free to use this pattern or handle it however seems right to you. The examples provided are very simple and provide metrics on failed and total requests.
