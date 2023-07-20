@@ -12,11 +12,15 @@ type Providers struct {
 	DBConnectionPool database.ConnectionPool
 }
 
+func (p *Providers) HasDBProvider() bool {
+	return p.DBConnectionPool != nil
+}
+
 func Init(conf *config.Config) (Providers, func(Providers)) {
 	providers := Providers{
 		DBConnectionPool: nil,
 	}
-	if conf.AppConfig.Database != nil {
+	if conf.HasDBProvider() {
 		providers.DBConnectionPool = dbConnect(conf)
 
 	}

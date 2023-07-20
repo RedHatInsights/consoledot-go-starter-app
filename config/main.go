@@ -94,3 +94,7 @@ func (c *Config) loadEnvVars() {
 		panic(err)
 	}
 }
+
+func (c *Config) HasDBProvider() bool {
+	return c.AppConfig.Database != nil
+}
