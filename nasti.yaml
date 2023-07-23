@@ -41,6 +41,9 @@ mutations:
       - "routes/main.go"
       - "main.go"
       - "main_test.go" 
+      - "providers/database/main.go"
+      - "providers/main.go"
+      - "metrics/main.go"
     validation:
       regex: ^github\.com/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+$
   
@@ -51,7 +54,7 @@ mutations:
     files:
       - "main.go"
     validation:
-      regex: ^[a-zA-Z0-9_-]+$
+      regex: .*
   
   - name: "deployment_name"
     prompt: "Deployment Name"
