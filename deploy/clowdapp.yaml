@@ -1,7 +1,7 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
-  name: consoledot-starter-app
+  name: go-starter-app
 objects:
 - apiVersion: cloud.redhat.com/v1alpha1
   kind: ClowdApp
