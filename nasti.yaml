@@ -1,5 +1,14 @@
 ---
 mutations:
+  - name: "clowdapp_name"
+    prompt: "ClowdApp Name"
+    help: "The name of your ClowdApp. Should be hyphanated. Example: starter-app."
+    replace: "go-starter-app"
+    files:
+      - "deploy/clowdapp.yaml"
+    validation:
+      kind: "slug"
+
   - name: "api_path"
     prompt: "ClowdApp api_path"
     help: "The api_path is the root of your api. For example, if your api_path is cool_app then your API will start at /api/cool_app"
@@ -14,12 +23,19 @@ mutations:
       
   - name: "email"
     prompt: "Contact Email"
-    help: "The contact email is used for the contact email in the swagger docs"
+    help: "The contact email is used for the contact email in the OpenAPI docs"
     replace: "addrew@redhat.com"
     files:
       - "main.go"
     validation:
       kind: "email"
+
+  - name: "contact_name"
+    prompt: "Contact Name"
+    help: "The contact name used in the OpenAPI docs"
+    replace: "Adam Drew"
+    files:
+      - "main.go"
 
   - name: "quay"
     prompt: "Quay Repo"
