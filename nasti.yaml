@@ -79,5 +79,6 @@ mutations:
     files:
       - "local.env"
       - "deploy/clowdapp.yaml"
+      - "local_config.json"
     validation:
       kind: "slug"
