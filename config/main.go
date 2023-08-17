@@ -15,11 +15,12 @@ const (
 	envFile         = "local.env"
 	localConfigFile = "local_config.json"
 	//Environment Variables
-	ginBindAddrEnvVar = "GIN_BIND_ADDR"
-	deploymentName    = "DEPLOYMENT_NAME"
+	deploymentName = "DEPLOYMENT_NAME"
 	//Strings
 	postgres  = "postgres://"
 	apiPrefix = "/api/"
+	//Fallbacks
+	ginBindAddr = "0.0.0.0"
 )
 
 func Load() *Config {
@@ -37,23 +38,40 @@ func (c *Config) GetMetricsPort() string {
 	return fmt.Sprintf(":%v", c.AppConfig.MetricsPort)
 }
 
+// Get the api path from the deployment name
 func (c *Config) GetApiPath() string {
-	depName := os.Getenv(deploymentName)
-	//iterate through AppConfig.Endpoints looking for the one with the name "app"
-	for _, endpoint := range c.AppConfig.Endpoints {
-		if endpoint.Name == depName {
-			return fmt.Sprintf("%v", endpoint.ApiPath)
-		}
+	deploymentEndpoint, err := c.GetDeploymentEndpoint()
+	if err != nil {
+		return apiPrefix + os.Getenv(deploymentName)
 	}
-	return apiPrefix + depName
+	return fmt.Sprintf("%v", deploymentEndpoint.ApiPath)
 }
 
-func (c *Config) RouterBindAddress() string {
-	host := os.Getenv(ginBindAddrEnvVar) + ":"
+// Finds the endpoint in the cdappconfig that matches the deployment name
+func (c *Config) GetDeploymentEndpoint() (clowder.DependencyEndpoint, error) {
+	depName := os.Getenv(deploymentName)
+	for _, endpoint := range c.AppConfig.Endpoints {
+		if endpoint.Name == depName {
+			return endpoint, nil
+		}
+	}
+	return clowder.DependencyEndpoint{}, fmt.Errorf("no endpoint found for %s", depName)
+}
 
+// Get the host to bind to
+func (c *Config) GetBindHost() string {
+	deploymentEndpoint, err := c.GetDeploymentEndpoint()
+	if err != nil {
+		return ginBindAddr
+	}
+	return deploymentEndpoint.Hostname
+}
+
+// Get the host to bind to and append the public port
+func (c *Config) RouterBindAddress() string {
+	host := c.GetBindHost()
 	//Append AppConfig.PublicPort to host
 	host += fmt.Sprint(*c.AppConfig.PublicPort)
-
 	return host
 }
 
