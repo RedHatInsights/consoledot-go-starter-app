@@ -1,4 +1,10 @@
 ---
+greeting: >
+  Welcome to the ConsoleDot Go Starter App generator!
+  Before you get started you will need to have access to the Ephemeral cluster
+  and a Quay repo to push the container image for your new app "main_test.go"
+  If you don't have access to the Ephemeral cluster please check out https://consoledot.pages.redhat.com/docs/dev/creating-a-new-app/using-ee/getting-started-with-ees.html and come back to this project later.
+  If you don't have a Quay repo either create one yourself on quay.io or create one in app-interface as described here https://gitlab.cee.redhat.com/consoledot/app-interface#create-a-quay-repository-for-an-onboarded-app-app-sreapp-1yml
 mutations:
   - name: "clowdapp_name"
     prompt: "ClowdApp Name"
