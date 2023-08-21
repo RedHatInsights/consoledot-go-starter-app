@@ -91,6 +91,7 @@ mutations:
       - "providers/database/main.go"
       - "providers/main.go"
       - "metrics/main.go"
+      - "DERIVED.md"
     validation:
       regex: ^github\.com/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+$
   

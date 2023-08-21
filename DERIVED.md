@@ -8,9 +8,6 @@ Before using the app there are a few things you'll want to have in place:
 2. [Bonfire installed](https://consoledot.pages.redhat.com/docs/dev/creating-a-new-app/using-ee/bonfire.html)
 3. [Openshift Console](https://console-openshift-console.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/command-line-tools) (oc) installed
 
-
-
-
 To deploy this app in ephemeral do the following:
 
 0. Use `oc` to log in to the ephemeral cluster and your container engine to log into quay:
@@ -76,3 +73,7 @@ $ make run-local-depts
 ```
 $ make run
 ```
+
+## Next Steps
+* Your new app is already initialized for git. Go ahead and push it up to the repo you specified: github.com/RedHatInsights/consoledot-go-starter-app
+* Explore the Makefile to see how to build the app, run tests, refresh the api docs, etc
