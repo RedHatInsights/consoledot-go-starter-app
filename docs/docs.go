@@ -113,7 +113,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/api/starter-app-api/v1",
 	Schemes:          []string{},
 	Title:            "ConsoleDot Go Starter App API",
-	Description:      "This is a sample API for the ConsoleDot Go Starter App.",
+	Description:      "API Docs for ConsoleDot Go Starter App API",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

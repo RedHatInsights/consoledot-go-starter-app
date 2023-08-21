@@ -8,7 +8,16 @@ Before using the app there are a few things you'll want to have in place:
 2. [Bonfire installed](https://consoledot.pages.redhat.com/docs/dev/creating-a-new-app/using-ee/bonfire.html)
 3. [Openshift Console](https://console-openshift-console.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com/command-line-tools) (oc) installed
 
+
+
+
 To deploy this app in ephemeral do the following:
+
+0. Use `oc` to log in to the ephemeral cluster and your container engine to log into quay:
+``` bash
+$ oc login --token=... --server=https://api.c-rh-c-eph.8p0c.p1.openshiftapps.com:6443
+$ podman login quay.io
+```
 
 1. Reserve a namespace and save the namespace name in an environment variable
 ```bash
@@ -56,14 +65,13 @@ You can put any environemnt variable definitions you want in the `local.env` fil
 ### Config Files
 There's no single idiomatic way to handle config in Golang apps. Environment variables are probably the most popular, but other options exist. This starter app includes no configuration beyond environment variables and Clowder. You are welcome to use whatever else you like.
 
-## Run in Ephemeral
+## Running Locally
 
-0. Make sure you are logged into the Ephemeral Cluster
-1. Make sure you are docker/podman logged into quay.io
-2. Check out a namespace `bonfire namespace reserve`
-3. Deploy the app into your namespace `make run-ephemeral NAMESPACE=$NAMESPCACE`
-
-## Run Local
-
-0. Run the local dependency stack `make run-local-deps`
-1. Run the app `make run`
+0. Start the local dependency stack. This will start your database.
+```
+$ make run-local-depts
+```
+1. Run the app 
+```
+$ make run
+```
