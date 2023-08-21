@@ -42,7 +42,7 @@ parameters:
   value: stage
 - description : Database Name
   name: DB_NAME
-  value: starter_app
+  value: starter-app-db
 - description: Namespace to deploy into
   name: NAMESPACE
   value: ${NAMESPACE}

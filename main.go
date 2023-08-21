@@ -50,7 +50,7 @@ func main() {
 func initLogging() {
 	// Set the default log level
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	log.Info().Msg("Starting ConsoleDot Go Starter App")
+	log.Info().Msg("Starting ConsoleDot Go Starter App API")
 }
 
 // initAPIDocs sets up the swagger (openAPI) docs

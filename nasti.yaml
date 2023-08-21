@@ -45,17 +45,18 @@ mutations:
     prompt: "ClowdApp Name"
     help: "The name of your ClowdApp. Should be hyphanated. Example: starter-app."
     replace: "go-starter-app"
-    default: "{{ app_name.lower().split(' ') | join('_') }}"
+    default: "{{ app_name.lower().split(' ') | join('-') }}"
     files:
       - "deploy/clowdapp.yaml"
+      - "cdappconfig.json"
     validation:
       kind: "slug"
 
   - name: "api_path"
     prompt: "ClowdApp api_path"
-    help: "The api_path is the root of your api. For example, if your api_path is cool_app then your API will start at /api/cool_app"
+    help: "The api_path is the root of your api. For example, if your api_path is cool-app then your API will start at /api/cool-app"
     replace: "starter-app-api"
-    default: "{{ app_name.lower().split(' ') | join('_') }}"
+    default: "{{ app_name.lower().split(' ') | join('-') }}"
     files:
       - "cdappconfig.json"
       - "deploy/clowdapp.yaml"
@@ -92,21 +93,34 @@ mutations:
     validation:
       regex: ^github\.com/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+$
   
-  - name: "api_doc_title"
-    prompt: "API Doc Title"
-    help: "The api doc title is the title of your api documentation"
+  - name: "docs_name"
+    prompt: "Docs Name"
+    help: "Name that appears in docs, startup message, README, etc. Example: Starter App"
     replace: "ConsoleDot Go Starter App API"
-    default: "{{ app_name }} OpenAPI Docs"
+    default: "{{ app_name }}"
     files:
       - "main.go"
+      - "DERIVED.md"
     validation:
-      regex: .*
+      regex: ^[A-Za-z0-9 ]+$
   
   - name: "deployment_name"
     prompt: "Deployment Name"
     help: "Your application's deployment name. Should be hyphanated. Example: starter-app-deployment."
     replace: "starter-app-depolyment"
-    default: "{{ app_name.lower().split(' ') | join('_') }}"
+    default: "{{ app_name.lower().split(' ') | join('-') }}"
+    files:
+      - "deploy/clowdapp.yaml"
+      - "cdappconfig.json"
+      - "config/main.go"
+    validation:
+      kind: "slug"
+
+  - name: "database_name"
+    prompt: "Database Name"
+    help: "Name of your database. Should be hyphanated. Example: starter-app-db."
+    replace: "starter-app-depolyment"
+    default: "{{ app_name.lower().split(' ') | join('-') }}"
     files:
       - "deploy/clowdapp.yaml"
       - "cdappconfig.json"
