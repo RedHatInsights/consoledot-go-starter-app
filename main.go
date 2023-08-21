@@ -55,7 +55,7 @@ func initLogging() {
 
 // initAPIDocs sets up the swagger (openAPI) docs
 func initAPIDocs(router *gin.Engine) {
-	swaggerRoute := apiPath + "/api_docs/*any"
+	swaggerRoute := apiPath + "/api-docs/*any"
 	// Example of editing the OpenAPI info programatically
 	docs.SwaggerInfo.Host = conf.RouterBindAddress()
 	docs.SwaggerInfo.BasePath = swaggerRoute
