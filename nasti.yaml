@@ -20,7 +20,7 @@ globals:
       regex: ^[A-Za-z0-9 ]+$
 
 hooks:
-  cleanup: true
+  auto_cleanup: true
   after_script: after_template.sh
 
 mutations:
