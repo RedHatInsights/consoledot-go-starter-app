@@ -7,4 +7,4 @@ services:
     environment:
       POSTGRES_USER: shadowman
       POSTGRES_PASSWORD: yearofthelinuxdesktop
-      POSTGRES_DB: starter_app
+      POSTGRES_DB: starter-app-db

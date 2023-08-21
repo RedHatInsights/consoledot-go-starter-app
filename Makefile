@@ -30,7 +30,7 @@ endif
 build:
 	go build -o bin/${BINARY_NAME} main.go
 
-run:
+run: api-docs
 	go run main.go
 
 clean:
@@ -47,10 +47,10 @@ setup: build
 api-docs:
 	swag init
 
-run-ephemeral: check-image
+run-ephemeral: api-docs check-image
 	oc process -f deploy/clowdapp.yaml -p NAMESPACE=$(NAMESPACE) -p ENV_NAME=env-$(NAMESPACE)  IMAGE=${IMAGE} IMAGE_TAG=${IMAGE_TAG} | oc create -f -
 
-run-local-deps:
+run-local-deps: api-docs
 	$(COMPOSE_TOOL) up
 
 build-image:

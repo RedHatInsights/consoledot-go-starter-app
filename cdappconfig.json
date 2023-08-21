@@ -12,7 +12,7 @@
             }
         },
     "database": {
-        "name": "starter_app",
+        "name": "starter-app-db",
         "username": "shadowman",
         "password": "yearofthelinuxdesktop",
         "hostname": "0.0.0.0",

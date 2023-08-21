@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample API for the ConsoleDot Go Starter App.",
+        "description": "API Docs for ConsoleDot Go Starter App API",
         "title": "ConsoleDot Go Starter App API",
         "contact": {
             "name": "Adam Drew",

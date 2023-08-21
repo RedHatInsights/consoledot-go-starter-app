@@ -24,7 +24,7 @@ var (
 // main godoc
 // @title ConsoleDot Go Starter App API
 // @version         1.0
-// @description     This is a sample API for the ConsoleDot Go Starter App.
+// @description     API Docs for ConsoleDot Go Starter App API
 // @contact.name   	Adam Drew
 // @contact.email  	addrew@redhat.com
 // @BasePath  		/api/starter-app-api/v1
@@ -50,12 +50,12 @@ func main() {
 func initLogging() {
 	// Set the default log level
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	log.Info().Msg("Starting ConsoleDot Go Starter App")
+	log.Info().Msg("Starting ConsoleDot Go Starter App API")
 }
 
 // initAPIDocs sets up the swagger (openAPI) docs
 func initAPIDocs(router *gin.Engine) {
-	swaggerRoute := apiPath + "/api_docs/*any"
+	swaggerRoute := apiPath + "/api-docs/*any"
 	// Example of editing the OpenAPI info programatically
 	docs.SwaggerInfo.Host = conf.RouterBindAddress()
 	docs.SwaggerInfo.BasePath = swaggerRoute

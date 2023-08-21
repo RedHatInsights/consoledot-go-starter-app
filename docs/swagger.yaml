@@ -3,7 +3,7 @@ info:
   contact:
     email: addrew@redhat.com
     name: Adam Drew
-  description: This is a sample API for the ConsoleDot Go Starter App.
+  description: API Docs for ConsoleDot Go Starter App API
   title: ConsoleDot Go Starter App API
   version: "1.0"
 paths:
