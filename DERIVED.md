@@ -41,6 +41,7 @@ NAME                                  CLASS               HOSTS                 
 awesome-new-app-awesome-new-app       openshift-default   env-ephemeral-5irb9j-uqojupc5.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com        router-default.apps.c-rh-c-eph.8p0c.p1.openshiftapps.com   
 ...
 ```
+It'll take a minute or so for your app to spin up, so throw a ball around with a dog or something and then come back.
 
 4. Say hi to your app!
 ```
