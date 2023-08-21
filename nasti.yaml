@@ -1,15 +1,34 @@
 ---
 greeting: >
   Welcome to the ConsoleDot Go Starter App generator!
-  Before you get started you will need to have access to the Ephemeral cluster
-  and a Quay repo to push the container image for your new app "main_test.go"
+  
+  Before generating your app please do the following:
+    - Ensure you have access to the ephemeral cluster
+    - Create a new Quay repo for your app
+    - Create a new GitHub repo for your app
+
+  You will need access to the ephemeral cluster to run your app in ephemeral. You will be asked for the URLs to the Quay and GitHub repos as part of this generator script as they are required in multiple places in the code and associated files.
+
   If you don't have access to the Ephemeral cluster please check out https://consoledot.pages.redhat.com/docs/dev/creating-a-new-app/using-ee/getting-started-with-ees.html and come back to this project later.
   If you don't have a Quay repo either create one yourself on quay.io or create one in app-interface as described here https://gitlab.cee.redhat.com/consoledot/app-interface#create-a-quay-repository-for-an-onboarded-app-app-sreapp-1yml
+
+globals:
+  - name: "app_name"
+    prompt: "App Name"
+    help: "Alpha-numeric. Spaces. No special characters. Example: My Great App"
+    validation:
+      regex: ^[A-Za-z0-9 ]+$
+
+hooks:
+  cleanup: true
+  after: after_template.sh
+
 mutations:
   - name: "clowdapp_name"
     prompt: "ClowdApp Name"
     help: "The name of your ClowdApp. Should be hyphanated. Example: starter-app."
     replace: "go-starter-app"
+    default: "{{ app_name.lower().split(' ') | join('_') }}"
     files:
       - "deploy/clowdapp.yaml"
     validation:
@@ -19,8 +38,9 @@ mutations:
     prompt: "ClowdApp api_path"
     help: "The api_path is the root of your api. For example, if your api_path is cool_app then your API will start at /api/cool_app"
     replace: "starter-app-api"
+    default: "{{ app_name.lower().split(' ') | join('_') }}"
     files:
-      - "local_config.json"
+      - "cdappconfig.json"
       - "deploy/clowdapp.yaml"
       - "main.go"
       - "routes/api.go"
@@ -83,8 +103,8 @@ mutations:
     help: "Your application's deployment name. Should be hyphanated. Example: starter-app-deployment."
     replace: "starter-app-depolyment"
     files:
-      - "local.env"
       - "deploy/clowdapp.yaml"
-      - "local_config.json"
+      - "cdappconfig.json"
+      - "config/main.go"
     validation:
       kind: "slug"

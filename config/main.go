@@ -13,9 +13,8 @@ import (
 const (
 	//Config Files
 	envFile         = "local.env"
-	localConfigFile = "local_config.json"
-	//Environment Variables
-	deploymentName = "DEPLOYMENT_NAME"
+	localConfigFile = "cdappconfig.json"
+	deploymentName  = "starter-app-depolyment"
 	//Strings
 	postgres  = "postgres://"
 	apiPrefix = "/api/"
@@ -42,7 +41,7 @@ func (c *Config) GetMetricsPort() string {
 func (c *Config) GetApiPath() string {
 	deploymentEndpoint, err := c.GetDeploymentEndpoint()
 	if err != nil {
-		return apiPrefix + os.Getenv(deploymentName)
+		return apiPrefix + deploymentName
 	}
 	return fmt.Sprintf("%v", deploymentEndpoint.ApiPath)
 }
@@ -71,7 +70,7 @@ func (c *Config) GetBindHost() string {
 func (c *Config) RouterBindAddress() string {
 	host := c.GetBindHost()
 	//Append AppConfig.PublicPort to host
-	host += fmt.Sprint(*c.AppConfig.PublicPort)
+	host += fmt.Sprintf(":%v", *c.AppConfig.PublicPort)
 	return host
 }
 
