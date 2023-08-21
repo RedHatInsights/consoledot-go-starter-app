@@ -1,26 +1,37 @@
 ---
-mutations:
-  - name: "clowdapp_name"
-    prompt: "ClowdApp Name"
-    help: "The name of your ClowdApp. Should be hyphanated. Example: starter-app."
-    replace: "go-starter-app"
-    files:
-      - "deploy/clowdapp.yaml"
-    validation:
-      kind: "slug"
+greeting: >
+  Welcome to the ConsoleDot Go Starter App generator!
+  
+  Before generating your app please do the following:
+    - Ensure you have access to the ephemeral cluster
+    - Create a new Quay repo for your app
+    - Create a new GitHub repo for your app
 
-  - name: "api_path"
-    prompt: "ClowdApp api_path"
-    help: "The api_path is the root of your api. For example, if your api_path is cool_app then your API will start at /api/cool_app"
-    replace: "starter-app-api"
-    files:
-      - "local_config.json"
-      - "deploy/clowdapp.yaml"
-      - "main.go"
-      - "routes/api.go"
+  You will need access to the ephemeral cluster to run your app in ephemeral. You will be asked for the URLs to the Quay and GitHub repos as part of this generator script as they are required in multiple places in the code and associated files.
+
+  If you don't have access to the Ephemeral cluster please check out https://consoledot.pages.redhat.com/docs/dev/creating-a-new-app/using-ee/getting-started-with-ees.html and come back to this project later.
+  If you don't have a Quay repo either create one yourself on quay.io or create one in app-interface as described here https://gitlab.cee.redhat.com/consoledot/app-interface#create-a-quay-repository-for-an-onboarded-app-app-sreapp-1yml
+
+globals:
+  - name: "app_name"
+    prompt: "App Name"
+    help: "Alpha-numeric. Spaces. No special characters. Example: My Great App"
     validation:
-      kind: "slug"
-      
+      regex: ^[A-Za-z0-9 ]+$
+
+hooks:
+  cleanup: true
+  after_script: after_template.sh
+
+mutations:
+
+  - name: "contact_name"
+    prompt: "Contact Name"
+    help: "The contact name used in the OpenAPI docs"
+    replace: "Adam Drew"
+    files:
+      - "main.go"
+
   - name: "email"
     prompt: "Contact Email"
     help: "The contact email is used for the contact email in the OpenAPI docs"
@@ -30,17 +41,34 @@ mutations:
     validation:
       kind: "email"
 
-  - name: "contact_name"
-    prompt: "Contact Name"
-    help: "The contact name used in the OpenAPI docs"
-    replace: "Adam Drew"
+  - name: "clowdapp_name"
+    prompt: "ClowdApp Name"
+    help: "The name of your ClowdApp. Should be hyphanated. Example: starter-app."
+    replace: "go-starter-app"
+    default: "{{ app_name.lower().split(' ') | join('_') }}"
     files:
-      - "main.go"
+      - "deploy/clowdapp.yaml"
+    validation:
+      kind: "slug"
 
+  - name: "api_path"
+    prompt: "ClowdApp api_path"
+    help: "The api_path is the root of your api. For example, if your api_path is cool_app then your API will start at /api/cool_app"
+    replace: "starter-app-api"
+    default: "{{ app_name.lower().split(' ') | join('_') }}"
+    files:
+      - "cdappconfig.json"
+      - "deploy/clowdapp.yaml"
+      - "main.go"
+      - "routes/api.go"
+    validation:
+      kind: "slug"
+      
   - name: "quay"
     prompt: "Quay Repo"
     help: "The quay repo is the location of your container image. Should be in the form of quay.io/username/repo"
     replace: "quay.io/rh_ee_addrew/consoledot-go-starter-app"
+    default: "quay.io/cloudservices/{{ app_name.lower().split(' ') | join('_') }}"
     files:
       - "Makefile"
     validation:
@@ -50,6 +78,7 @@ mutations:
     prompt: "Github Repo"
     help: "The github repo is the location of your github repo. Should be in the form of github.com/user_or_org/repo"
     replace: "github.com/RedHatInsights/consoledot-go-starter-app"
+    default: "github.com/RedHatInsights/{{ app_name.lower().split(' ') | join('_') }}"
     files:
       - "go.mod"
       - "providers/database/main.go"
@@ -67,6 +96,7 @@ mutations:
     prompt: "API Doc Title"
     help: "The api doc title is the title of your api documentation"
     replace: "ConsoleDot Go Starter App API"
+    default: "{{ app_name }} OpenAPI Docs"
     files:
       - "main.go"
     validation:
@@ -76,9 +106,10 @@ mutations:
     prompt: "Deployment Name"
     help: "Your application's deployment name. Should be hyphanated. Example: starter-app-deployment."
     replace: "starter-app-depolyment"
+    default: "{{ app_name.lower().split(' ') | join('_') }}"
     files:
-      - "local.env"
       - "deploy/clowdapp.yaml"
-      - "local_config.json"
+      - "cdappconfig.json"
+      - "config/main.go"
     validation:
       kind: "slug"
