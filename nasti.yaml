@@ -119,11 +119,12 @@ mutations:
   - name: "database_name"
     prompt: "Database Name"
     help: "Name of your database. Should be hyphanated. Example: starter-app-db."
-    replace: "starter-app-depolyment"
+    replace: "starter-app-db"
     default: "{{ app_name.lower().split(' ') | join('-') }}"
     files:
       - "deploy/clowdapp.yaml"
       - "cdappconfig.json"
-      - "config/main.go"
+      - "main_test.go"
+      - "compose.yaml"
     validation:
       kind: "slug"

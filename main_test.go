@@ -17,7 +17,7 @@ type mockQueryRow struct {
 }
 
 func (m *mockQueryRow) Scan(dest ...interface{}) error {
-	retVal := "Database : starter_app, User : shadowman"
+	retVal := "Database : starter-app-db, User : shadowman"
 	*dest[0].(*string) = retVal
 	return nil
 }
@@ -81,5 +81,5 @@ func TestDBInfoRoute(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, "{\"db-info\":\"Database : starter_app, User : shadowman\"}", w.Body.String())
+	assert.Equal(t, "{\"db-info\":\"Database : starter-app-db, User : shadowman\"}", w.Body.String())
 }

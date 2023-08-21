@@ -24,7 +24,7 @@ var (
 // main godoc
 // @title ConsoleDot Go Starter App API
 // @version         1.0
-// @description     This is a sample API for the ConsoleDot Go Starter App.
+// @description     API Docs for ConsoleDot Go Starter App API
 // @contact.name   	Adam Drew
 // @contact.email  	addrew@redhat.com
 // @BasePath  		/api/starter-app-api/v1
