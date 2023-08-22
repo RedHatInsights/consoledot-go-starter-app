@@ -1,7 +1,0 @@
----
-old_value: "starter-app-depolyment"
-files:
-  - "local.env"
-  - "deploy/clowdapp.yaml"
-prompt: "Your application's deployment name. Should be hyphanated. Example: starter-app-deployment."
-mutation_name: "deployment name"

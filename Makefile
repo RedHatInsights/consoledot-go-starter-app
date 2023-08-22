@@ -5,6 +5,11 @@ IMAGE=quay.io/rh_ee_addrew/consoledot-go-starter-app
 # Tag for the image
 IMAGE_TAG=`git rev-parse --short=7 HEAD`
 
+# If GOPATH isn't set, set it
+ifndef GOPATH
+export GOPATH := $(HOME)/go
+endif
+
 # Determine the container engine
 ifeq ($(shell which podman 2>/dev/null),)
     ifeq ($(shell which docker 2>/dev/null),)
