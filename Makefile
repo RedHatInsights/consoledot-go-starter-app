@@ -9,6 +9,13 @@ IMAGE_TAG=`git rev-parse --short=7 HEAD`
 ifndef GOPATH
 export GOPATH := $(HOME)/go
 endif
+# Check if GOPATH/bin is in PATH
+ifneq (,$(findstring $(GOPATH)/bin,$(PATH)))
+# NOP - GOPATH/bin is already in PATH
+else
+# Add GOPATH's bin directory to the PATH
+export PATH := $(GOPATH)/bin:$(PATH)
+endif
 
 # Determine the container engine
 ifeq ($(shell which podman 2>/dev/null),)
