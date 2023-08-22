@@ -26,7 +26,7 @@ $ NAMESPACE=ephemeral-utemsa
 
 2. Deploy the app:
 ```bash
-$ make run-ephemeral NAMESPACE=$NAMESPACE
+$ make deploy NAMESPACE=$NAMESPACE
 ...
 clowdapp.cloud.redhat.com/awesome-new-app created
 ```

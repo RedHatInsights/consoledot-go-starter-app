@@ -1,6 +1,0 @@
----
-old_value: "ConsoleDot Go Starter App API"
-files:
-  - "main.go"
-prompt: "API Doc Title. This is what will appear in your OpenAPI Spec."
-mutation_name: "api doc title"

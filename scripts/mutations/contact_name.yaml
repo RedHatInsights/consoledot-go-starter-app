@@ -1,6 +1,0 @@
----
-old_value: "Adam Drew"
-files:
-  - "main.go"
-prompt: "Your name. Will be used for the contact name in the OpenAPI spec."
-mutation_name: "contact name"

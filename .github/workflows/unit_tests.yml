@@ -1,0 +1,30 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - master  # Change 'main' to your main branch name
+  pull_request:
+    branches:
+      - master  # Change 'main' to your main branch name
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Use any runner you prefer
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.18
+
+    - name: Build
+      run: |
+        make setup
+        make build 
+
+    - name: tests
+      run: make test
+

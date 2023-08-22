@@ -5,6 +5,11 @@ IMAGE=quay.io/rh_ee_addrew/consoledot-go-starter-app
 # Tag for the image
 IMAGE_TAG=`git rev-parse --short=7 HEAD`
 
+# If GOPATH isn't set, set it
+ifndef GOPATH
+export GOPATH := $(HOME)/go
+endif
+
 # Determine the container engine
 ifeq ($(shell which podman 2>/dev/null),)
     ifeq ($(shell which docker 2>/dev/null),)
@@ -53,8 +58,8 @@ setup: build
 generate-api-docs:
 	swag init
 
-# Runs the application in ephemeral
-run-ephemeral: generate-api-docs build-and-push
+# Deploys the application to ephemeral
+deploy: generate-api-docs build-image push-image
 	oc process -f deploy/clowdapp.yaml -p NAMESPACE=$(NAMESPACE) -p ENV_NAME=env-$(NAMESPACE)  IMAGE=${IMAGE} IMAGE_TAG=${IMAGE_TAG} | oc create -f -
 
 # Runs the application's dependencies locally
@@ -62,12 +67,22 @@ run-local-deps:
 	$(COMPOSE_TOOL) up
 
 # Checks if an image exists in the repo that corresponds to the git SHA at head
-# If it does not, it builds and pushes the image
-build-and-push:
+# If it does not, it builds it
+build-image:
+	@if ! $(CONTAINER_ENGINE) images $(IMAGE):$(IMAGE_TAG) --format "{{.Repository}}:{{.Tag}}" | grep -q $(IMAGE):$(IMAGE_TAG); then \
+		echo "Image $(IMAGE):$(IMAGE_TAG) not found. Building and pushing..."; \
+		$(CONTAINER_ENGINE) build -t $(IMAGE):$(IMAGE_TAG) . ; \
+	else \
+		echo "Image $(IMAGE):$(IMAGE_TAG) already exists. Skipping build."; \
+	fi
+
+# Checks if an image exists in the repo that corresponds to the git SHA at head
+# If it does not, it builds it
+push-image:
 	@if ! $(CONTAINER_ENGINE) images $(IMAGE):$(IMAGE_TAG) --format "{{.Repository}}:{{.Tag}}" | grep -q $(IMAGE):$(IMAGE_TAG); then \
 		echo "Image $(IMAGE):$(IMAGE_TAG) not found. Building and pushing..."; \
 		$(CONTAINER_ENGINE) build -t $(IMAGE):$(IMAGE_TAG) . ; \
 		$(CONTAINER_ENGINE) push $(IMAGE):$(IMAGE_TAG) ; \
 	else \
-		echo "Image $(IMAGE):$(IMAGE_TAG) already exists. Skipping build and push."; \
+		echo "Image $(IMAGE):$(IMAGE_TAG) already exists. Skipping push."; \
 	fi
