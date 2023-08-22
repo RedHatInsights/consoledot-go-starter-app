@@ -4,9 +4,9 @@ A template for creating new ConsoleDot services in Golang.
 
 ## Requirements
 * Golang 1.18.8 or higher
-* Python 3.10 or higher
-* Podman 4.5 or higher
-* Podman Compose 1.0.6 or higher
+* Python 3.10 or higher along with pip
+* Either podman or docker
+* Either docker-compose or podman-compose 
 
 ## Prerequisites
 Before using the starter app there are a few things you'll want to have in place:
