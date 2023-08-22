@@ -27,39 +27,43 @@ else
     COMPOSE_TOOL = podman-compose
 endif
 
+# Builds the application binary
 build:
 	go build -o bin/${BINARY_NAME} main.go
 
-run: api-docs
+# Runs the application binary
+run: generate-api-docs
 	go run main.go
 
+# Cleans our project: deletes binaries
 clean:
 	go clean
 	rm bin/${BINARY_NAME}
 
+# Runs unit tests
 test:
 	go clean -cache
 	go test -v ./...
 
+# Builds the binary and installs the api docs binary
 setup: build
 	go install github.com/swaggo/swag/cmd/swag@latest
 
-api-docs:
+# Generates the api docs
+generate-api-docs:
 	swag init
 
-run-ephemeral: api-docs check-image
+# Runs the application in ephemeral
+run-ephemeral: generate-api-docs build-and-push
 	oc process -f deploy/clowdapp.yaml -p NAMESPACE=$(NAMESPACE) -p ENV_NAME=env-$(NAMESPACE)  IMAGE=${IMAGE} IMAGE_TAG=${IMAGE_TAG} | oc create -f -
 
-run-local-deps: api-docs
+# Runs the application's dependencies locally
+run-local-deps:
 	$(COMPOSE_TOOL) up
 
-build-image:
-	$(CONTAINER_ENGINE) build -t ${IMAGE}:${IMAGE_TAG} .
-
-push-image:
-	$(CONTAINER_ENGINE) push ${IMAGE}:${IMAGE_TAG}
-
-check-image:
+# Checks if an image exists in the repo that corresponds to the git SHA at head
+# If it does not, it builds and pushes the image
+build-and-push:
 	@if ! $(CONTAINER_ENGINE) images $(IMAGE):$(IMAGE_TAG) --format "{{.Repository}}:{{.Tag}}" | grep -q $(IMAGE):$(IMAGE_TAG); then \
 		echo "Image $(IMAGE):$(IMAGE_TAG) not found. Building and pushing..."; \
 		$(CONTAINER_ENGINE) build -t $(IMAGE):$(IMAGE_TAG) . ; \
