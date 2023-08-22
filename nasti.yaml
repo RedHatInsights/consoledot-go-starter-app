@@ -52,6 +52,16 @@ mutations:
     validation:
       kind: "slug"
 
+  - name: "metrics_prefix_name"
+    prompt: "Metrics Prefix Name"
+    help: "The prefix name for your metrics. Should be underscored. Example: starter_app."
+    replace: "starter_app_metric_prefix"
+    default: "{{ app_name.lower().split(' ') | join('_') }}"
+    files:
+      - "metrics/main.go"
+    validation:
+      kind: "slug"
+
   - name: "api_path"
     prompt: "ClowdApp api_path"
     help: "The api_path is the root of your api. For example, if your api_path is cool-app then your API will start at /api/cool-app"
