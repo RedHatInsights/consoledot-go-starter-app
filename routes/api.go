@@ -43,7 +43,7 @@ func helloWorld(context *gin.Context) {
 // @Router       /api/starter-app-api/v1/db-info [get]
 func dbInfo(ginContext *gin.Context) {
 	// Guard against no database connection
-	if !providerManager.HasDBProvider() {
+	if !providerManager.DBProviderGuard() {
 		log.Error().Msg("No database connection")
 		metrics.IncrementErrors()
 		ginContext.JSON(http.StatusInternalServerError, gin.H{

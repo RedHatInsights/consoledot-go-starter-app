@@ -8,9 +8,22 @@ import (
 
 type Providers struct {
 	DBConnectionPool database.ConnectionPool
+	Config           *config.Config
 }
 
-func (p *Providers) HasDBProvider() bool {
+// DBProviderGuard returns true if the database connection pool is not nil
+// If there is no connection it will attempt to establish one JIT
+// If the connection attempt fails it will return false
+// If the connection attempt succeeds it will return true
+// This guard function should be called before attempting to use the database connection pool
+func (p *Providers) DBProviderGuard() bool {
+	// We've got a connection pool so we're good
+	if p.DBConnectionPool != nil {
+		return true
+	}
+	// Try to establish a connection JIT
+	p.DBConnectionPool = dbConnect(p.Config)
+	// Return the result after the connection attempt
 	return p.DBConnectionPool != nil
 }
 
