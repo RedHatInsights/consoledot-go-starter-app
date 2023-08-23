@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	clowder "github.com/redhatinsights/app-common-go/pkg/api/v1"
@@ -11,10 +10,11 @@ import (
 )
 
 const (
-	//Config Files
 	envFile         = "local.env"
 	localConfigFile = "cdappconfig.json"
-	deploymentName  = "starter-app-depolyment"
+	//This should match the name of the deployment in the cdappconfig.json and your clowdapp
+	//We need this to resolve the api path when running on a cluster
+	deploymentName = "starter-app-depolyment"
 	//Strings
 	postgres  = "postgres://"
 	apiPrefix = "/api/"
@@ -48,13 +48,12 @@ func (c *Config) GetApiPath() string {
 
 // Finds the endpoint in the cdappconfig that matches the deployment name
 func (c *Config) GetDeploymentEndpoint() (clowder.DependencyEndpoint, error) {
-	depName := os.Getenv(deploymentName)
 	for _, endpoint := range c.AppConfig.Endpoints {
-		if endpoint.Name == depName {
+		if endpoint.Name == deploymentName {
 			return endpoint, nil
 		}
 	}
-	return clowder.DependencyEndpoint{}, fmt.Errorf("no endpoint found for %s", depName)
+	return clowder.DependencyEndpoint{}, fmt.Errorf("no endpoint found for %s", deploymentName)
 }
 
 // Get the host to bind to
