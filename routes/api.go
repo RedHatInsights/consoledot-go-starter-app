@@ -42,16 +42,6 @@ func helloWorld(context *gin.Context) {
 // @Success      200  {object}  map[string]any
 // @Router       /api/starter-app-api/v1/db-info [get]
 func dbInfo(ginContext *gin.Context) {
-	// Guard against no database connection
-	if !providerManager.DBProviderGuard() {
-		log.Error().Msg("No database connection")
-		metrics.IncrementErrors()
-		ginContext.JSON(http.StatusInternalServerError, gin.H{
-			"error": "No database connection",
-		})
-		return
-	}
-
 	var retVal string
 	retStatus := http.StatusOK
 	query := " select 'Database : ' ||current_database()||', '||'User : '|| user db_details;"
