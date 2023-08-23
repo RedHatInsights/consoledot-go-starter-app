@@ -30,6 +30,7 @@ func (p *Providers) DBProviderGuard() bool {
 func Init(conf *config.Config) (Providers, func(Providers)) {
 	providers := Providers{
 		DBConnectionPool: nil,
+		Config:           conf,
 	}
 	if conf.HasDBProvider() {
 		providers.DBConnectionPool = dbConnect(conf)
