@@ -58,11 +58,7 @@ func (c *Config) GetDeploymentEndpoint() (clowder.DependencyEndpoint, error) {
 
 // Get the host to bind to
 func (c *Config) GetBindHost() string {
-	deploymentEndpoint, err := c.GetDeploymentEndpoint()
-	if err != nil {
-		return ginBindAddr
-	}
-	return deploymentEndpoint.Hostname
+	return ginBindAddr
 }
 
 // Get the host to bind to and append the public port
