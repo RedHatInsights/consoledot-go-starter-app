@@ -1,21 +1,22 @@
 ---
 greeting: >
-  Welcome to the ConsoleDot Go Starter App generator!
-  
-  Before generating your app please do the following:
-    - Ensure you have access to the ephemeral cluster
-    - Create a new Quay repo for your app
-    - Create a new GitHub repo for your app
 
-  You will need access to the ephemeral cluster to run your app in ephemeral. You will be asked for the URLs to the Quay and GitHub repos as part of this generator script as they are required in multiple places in the code and associated files.
+  :waving_hand: [bold blue]Welcome to the ConsoleDot Go Starter App generator![/bold blue]
 
-  If you don't have access to the Ephemeral cluster please check out https://consoledot.pages.redhat.com/docs/dev/creating-a-new-app/using-ee/getting-started-with-ees.html and come back to this project later.
-  If you don't have a Quay repo either create one yourself on quay.io or create one in app-interface as described here https://gitlab.cee.redhat.com/consoledot/app-interface#create-a-quay-repository-for-an-onboarded-app-app-sreapp-1yml
+
+  :stop_sign: [bold blue]Before generating your app please do the following:[/bold blue]
+    [green]:heavy_check_mark:[/green] Ensure you have access to the ephemeral cluster
+    [green]:heavy_check_mark:[/green] Create a new Quay repo for your app
+    [green]:heavy_check_mark:[/green] Create a new GitHub repo for your app
+
+  :book: [bold blue]Documentation:[/bold blue]
+    :link: [link=https://consoledot.pages.redhat.com/docs/dev/creating-a-new-app/using-ee/getting-started-with-ees.html][blue]Ephemeral Cluster Access[/blue][/link]
+    :link: [link=https://gitlab.cee.redhat.com/consoledot/app-interface#create-a-quay-repository-for-an-onboarded-app-app-sreapp-1yml][blue]Create Quay Repo in App Interface[/blue][/link]
 
 globals:
   - name: "app_name"
-    prompt: "App Name"
-    help: "Alpha-numeric. Spaces. No special characters. Example: My Great App"
+    prompt: ":computer: [green]App Name[/green]"
+    help: "[gray][italic]Alpha-numeric. Spaces. No special characters. Example: My Great App[/italic][/gray]"
     validation:
       regex: ^[A-Za-z0-9 ]+$
 
@@ -26,15 +27,15 @@ hooks:
 mutations:
 
   - name: "contact_name"
-    prompt: "Contact Name"
-    help: "The contact name used in the OpenAPI docs"
+    prompt: ":woman: [green]Contact Name[/green]"
+    help: "[gray][italic]The contact name used in the OpenAPI docs[/gray][/italic]"
     replace: "Adam Drew"
     files:
       - "main.go"
 
   - name: "email"
-    prompt: "Contact Email"
-    help: "The contact email is used for the contact email in the OpenAPI docs"
+    prompt: ":mailbox: [green]Contact Email[/green]"
+    help: "[gray][italic]The contact email is used for the contact email in the OpenAPI docs[/gray][/italic]"
     replace: "addrew@redhat.com"
     files:
       - "main.go"
@@ -42,8 +43,8 @@ mutations:
       kind: "email"
 
   - name: "clowdapp_name"
-    prompt: "ClowdApp Name"
-    help: "The name of your ClowdApp. Should be hyphanated. Example: starter-app."
+    prompt: ":cloud: [green]ClowdApp Name[/green]"
+    help: "[gray][italic]The name of your ClowdApp. Should be hyphanated. Example: starter-app.[/gray][/italic]"
     replace: "go-starter-app"
     default: "{{ app_name.lower().split(' ') | join('-') }}"
     files:
@@ -53,18 +54,18 @@ mutations:
       kind: "slug"
 
   - name: "metrics_prefix_name"
-    prompt: "Metrics Prefix Name"
-    help: "The prefix name for your metrics. Should be underscored. Example: starter_app."
+    prompt: ":bar_chart: [green]Metrics Prefix Name[/green]"
+    help: "[gray][italic]The prefix name for your metrics. Should be underscored. Example: starter_app.[/gray][/italic]"
     replace: "starter_app_metric_prefix"
     default: "{{ app_name.lower().split(' ') | join('_') }}"
     files:
       - "metrics/main.go"
     validation:
-      kind: "slug"
+      regex: ^[a-zA-Z0-9_]+$
 
   - name: "api_path"
-    prompt: "ClowdApp api_path"
-    help: "The api_path is the root of your api. For example, if your api_path is cool-app then your API will start at /api/cool-app"
+    prompt: ":gear: [green]ClowdApp api_path[/green]"
+    help: "[gray][italic]The api_path is the root of your api. Letters, numbers, and hyphans. For example, if your api_path is cool-app then your API will start at '/api/cool-app'[/gray][/italic]"
     replace: "starter-app-api"
     default: "{{ app_name.lower().split(' ') | join('-') }}"
     files:
@@ -77,8 +78,8 @@ mutations:
       kind: "slug"
       
   - name: "quay"
-    prompt: "Quay Repo"
-    help: "The quay repo is the location of your container image. Should be in the form of quay.io/username/repo"
+    prompt: ":package: [green]Quay Repo[/green]"
+    help: "[gray][italic]The quay repo is the location of your container image. Should be in the form of quay.io/username/repo[/gray][/italic]"
     replace: "quay.io/rh_ee_addrew/consoledot-go-starter-app"
     default: "quay.io/cloudservices/{{ app_name.lower().split(' ') | join('_') }}"
     files:
@@ -87,8 +88,8 @@ mutations:
       regex: ^quay\.io/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+$
 
   - name: "github"
-    prompt: "Github Repo"
-    help: "The github repo is the location of your github repo. Should be in the form of github.com/user_or_org/repo"
+    prompt: ":cat: [green]Github Repo[/green]"
+    help: "[gray][italic]The github repo is the location of your github repo. Should be in the form of github.com/user_or_org/repo[/gray][/italic]"
     replace: "github.com/RedHatInsights/consoledot-go-starter-app"
     default: "github.com/RedHatInsights/{{ app_name.lower().split(' ') | join('_') }}"
     files:
@@ -106,8 +107,8 @@ mutations:
       regex: ^github\.com/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+$
   
   - name: "docs_name"
-    prompt: "Docs Name"
-    help: "Name that appears in docs, startup message, README, etc. Example: Starter App"
+    prompt: ":book: [green]Docs Name[/green]"
+    help: "[gray][italic]Name that appears in docs, startup message, README, etc. Example: Starter App[/gray][/italic]"
     replace: "ConsoleDot Go Starter App API"
     default: "{{ app_name }}"
     files:
@@ -117,8 +118,8 @@ mutations:
       regex: ^[A-Za-z0-9 ]+$
   
   - name: "deployment_name"
-    prompt: "Deployment Name"
-    help: "Your application's deployment name. Should be hyphanated. Example: starter-app-deployment."
+    prompt: ":whale: [green]Deployment Name[/green]"
+    help: "[gray][italic]Your application's deployment name. Should be hyphanated. Example: starter-app-deployment.[/gray][/italic]"
     replace: "starter-app-depolyment"
     default: "{{ app_name.lower().split(' ') | join('-') }}"
     files:
@@ -129,8 +130,8 @@ mutations:
       kind: "slug"
 
   - name: "database_name"
-    prompt: "Database Name"
-    help: "Name of your database. Should be hyphanated. Example: starter-app-db."
+    prompt: ":oil_drum: [green]Database Name[/green]"
+    help: "[gray][italic]Name of your database. Should be hyphanated. Example: starter-app-db.[/gray][/italic]"
     replace: "starter-app-db"
     default: "{{ app_name.lower().split(' ') | join('-') }}"
     files:
